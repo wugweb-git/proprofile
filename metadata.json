@@ -1,0 +1,5 @@
+{
+  "name": "Identity Prism Engine (IPE)",
+  "description": "An agentic digital proxy and socratic command center for polymathic systems architects.",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"]
+}
