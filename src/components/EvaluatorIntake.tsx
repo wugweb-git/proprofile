@@ -56,9 +56,9 @@ export default function EvaluatorIntake() {
     <div className="min-h-screen bg-[#050505] text-white flex flex-col p-8 md:p-12">
       <div className="max-w-[600px] mx-auto w-full flex-1 flex flex-col">
         <div className="flex justify-between items-center mb-16">
-          <DotMatrixText color="text-red-600">COMPLEXITY_PORT // EVALUATOR_INTAKE</DotMatrixText>
+          <DotMatrixText color="text-nothing-yellow">COMPLEXITY_PORT // EVALUATOR_INTAKE</DotMatrixText>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+            <div className="w-2 h-2 rounded-full bg-nothing-yellow animate-pulse" />
             <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Listening</span>
           </div>
         </div>
@@ -93,12 +93,12 @@ export default function EvaluatorIntake() {
                     }
                   }}
                   placeholder="DROP_JD_HERE..."
-                  className="w-full h-full bg-white/5 border border-white/10 rounded-[3rem] p-10 text-white text-lg leading-relaxed outline-none focus:border-red-600 transition-all resize-none font-light placeholder:text-white/5"
+                  className="w-full h-full bg-white/5 border border-white/10 rounded-[3rem] p-10 text-white text-lg leading-relaxed outline-none focus:border-nothing-yellow transition-all resize-none font-light placeholder:text-white/5"
                 />
                 {isAnalyzing && (
                   <div className="absolute inset-0 bg-black/60 backdrop-blur-sm rounded-[3rem] flex flex-col items-center justify-center gap-6">
-                    <div className="w-16 h-16 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
-                    <DotMatrixText color="text-red-600">METABOLIZING_COMPLEXITY...</DotMatrixText>
+                    <div className="w-16 h-16 border-2 border-nothing-yellow border-t-transparent rounded-full animate-spin" />
+                    <DotMatrixText color="text-nothing-yellow">METABOLIZING_COMPLEXITY...</DotMatrixText>
                   </div>
                 )}
               </div>
@@ -106,7 +106,7 @@ export default function EvaluatorIntake() {
               <button 
                 onClick={() => handleAudit()}
                 disabled={isAnalyzing || !jdText.trim()}
-                className="w-full py-8 bg-red-600 rounded-full text-[12px] font-mono uppercase tracking-[0.3em] text-white font-bold shadow-2xl shadow-red-600/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:hover:scale-100"
+                className="w-full py-8 bg-nothing-yellow rounded-full text-[12px] font-mono uppercase tracking-[0.3em] text-black font-bold shadow-2xl shadow-nothing-yellow/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:hover:scale-100"
               >
                 INITIATE_SIMULATED_AUDIT
               </button>
@@ -121,7 +121,7 @@ export default function EvaluatorIntake() {
               <div className="flex justify-between items-start">
                 <div>
                   <h2 className="text-4xl font-display font-bold text-white mb-2">AUDIT_REPORT</h2>
-                  <p className="text-red-600 font-mono text-[10px] uppercase tracking-widest">Spirit Fit: {auditReport.score}/10</p>
+                  <p className="text-nothing-yellow font-mono text-[10px] uppercase tracking-widest">Spirit Fit: {auditReport.score}/10</p>
                 </div>
                 <button 
                   onClick={() => setAuditReport(null)}
@@ -135,14 +135,14 @@ export default function EvaluatorIntake() {
                 {/* THE DIAGNOSIS */}
                 <div className="bg-white/5 rounded-[2.5rem] p-8 border border-white/5">
                   <div className="flex justify-between items-center mb-4">
-                    <DotMatrixText color="text-red-600">THE_DIAGNOSIS</DotMatrixText>
+                    <DotMatrixText color="text-nothing-yellow">THE_DIAGNOSIS</DotMatrixText>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] font-mono text-white/40 uppercase">Spirit_Decay</span>
                       <div className="w-24 h-1.5 bg-white/5 rounded-full overflow-hidden">
                         <motion.div 
                           initial={{ width: 0 }}
                           animate={{ width: `${(10 - auditReport.score) * 10}%` }}
-                          className="h-full bg-red-600"
+                          className="h-full bg-nothing-yellow"
                         />
                       </div>
                     </div>
@@ -160,17 +160,17 @@ export default function EvaluatorIntake() {
                   </div>
                   <div className="bg-white/5 rounded-[2rem] p-6 border border-white/5">
                     <DotMatrixText className="mb-2">COGNITIVE_COST</DotMatrixText>
-                    <p className="text-xs text-red-600 font-mono">{auditReport.cost}</p>
+                    <p className="text-xs text-nothing-yellow font-mono">{auditReport.cost}</p>
                   </div>
                 </div>
 
                 {/* PILLAR_VIOLATIONS */}
                 <div className="bg-white/5 rounded-[2.5rem] p-8 border border-white/5">
-                  <DotMatrixText color="text-red-600" className="mb-6">PILLAR_VIOLATIONS</DotMatrixText>
+                  <DotMatrixText color="text-nothing-yellow" className="mb-6">PILLAR_VIOLATIONS</DotMatrixText>
                   <div className="flex flex-wrap gap-3">
                     {auditReport.violations.length > 0 ? auditReport.violations.map((node: string) => (
-                      <div key={node} className="px-4 py-2 bg-red-600/10 rounded-full flex items-center gap-2 border border-red-600/20">
-                        <X size={12} className="text-red-600" />
+                      <div key={node} className="px-4 py-2 bg-nothing-yellow/10 rounded-full flex items-center gap-2 border border-nothing-yellow/20">
+                        <X size={12} className="text-nothing-yellow" />
                         <span className="text-[10px] font-mono uppercase text-white tracking-widest">{node}</span>
                       </div>
                     )) : (
@@ -182,16 +182,16 @@ export default function EvaluatorIntake() {
                 {/* THE GATE */}
                 <div className={cn(
                   "rounded-[2.5rem] p-8 border flex items-center justify-between",
-                  auditReport.handshakeAuthorized ? "bg-red-600/10 border-red-600/20" : "bg-white/5 border-white/10"
+                  auditReport.handshakeAuthorized ? "bg-nothing-yellow/10 border-nothing-yellow/20" : "bg-white/5 border-white/10"
                 )}>
                   <div>
-                    <DotMatrixText color="text-red-600" className="mb-2">THE_GATE</DotMatrixText>
+                    <DotMatrixText color="text-nothing-yellow" className="mb-2">THE_GATE</DotMatrixText>
                     <div className="text-2xl font-display font-bold text-white">
                       {auditReport.handshakeAuthorized ? "AUTHORIZED" : "DECLINED"}
                     </div>
                   </div>
                   {auditReport.handshakeAuthorized ? (
-                    <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white shadow-lg shadow-red-600/20">
+                    <div className="w-12 h-12 rounded-full bg-nothing-yellow flex items-center justify-center text-black shadow-lg shadow-nothing-yellow/20">
                       <Check size={24} />
                     </div>
                   ) : (
@@ -204,7 +204,7 @@ export default function EvaluatorIntake() {
 
               <div className="pt-4 mt-auto">
                 {auditReport.handshakeAuthorized ? (
-                  <button className="w-full py-6 bg-red-600 rounded-full text-[10px] font-mono uppercase tracking-widest text-white font-bold shadow-2xl shadow-red-600/20">
+                  <button className="w-full py-6 bg-nothing-yellow rounded-full text-[10px] font-mono uppercase tracking-widest text-black font-bold shadow-2xl shadow-nothing-yellow/20">
                     REQUEST_HUMAN_HANDSHAKE
                   </button>
                 ) : (

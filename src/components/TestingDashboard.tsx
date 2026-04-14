@@ -77,7 +77,11 @@ export const TestingDashboard = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-2xl shadow-red-600/40"
+          aria-expanded={isOpen}
+          aria-haspopup="dialog"
+          aria-controls="testing-dashboard-panel"
+          aria-label="Toggle Testing Dashboard"
+          className="w-12 h-12 rounded-full bg-nothing-yellow text-black flex items-center justify-center shadow-2xl shadow-nothing-yellow/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-nothing-yellow focus-visible:ring-offset-black"
         >
           {isOpen ? <X size={20} /> : <Settings size={20} />}
         </motion.button>
@@ -86,6 +90,10 @@ export const TestingDashboard = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id="testing-dashboard-panel"
+            role="dialog"
+            aria-modal="false"
+            aria-label="Testing Dashboard Control Panel"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
@@ -93,15 +101,15 @@ export const TestingDashboard = () => {
           >
             <div className="space-y-8">
               <div>
-                <DotMatrixText color="text-red-600" className="mb-4">PERSONA_TOGGLE</DotMatrixText>
+                <DotMatrixText color="text-nothing-yellow" className="mb-4">PERSONA_TOGGLE</DotMatrixText>
                 <div className="grid grid-cols-1 gap-2">
                   {personas.map(p => (
                     <button
                       key={p.label}
                       onClick={() => handlePersonaShift(p)}
                       className={cn(
-                        "w-full py-3 px-4 rounded-xl border text-[10px] font-mono uppercase tracking-widest transition-all text-left flex justify-between items-center",
-                        state.mode === p.mode ? "bg-red-600 border-red-600 text-white" : "bg-white/5 border-white/5 text-white/40 hover:bg-white/10"
+                        "w-full py-3 px-4 rounded-xl border text-[10px] font-mono uppercase tracking-widest transition-all text-left flex justify-between items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-nothing-yellow",
+                        state.mode === p.mode ? "bg-nothing-yellow border-nothing-yellow text-black" : "bg-white/5 border-white/5 text-white/40 hover:bg-white/10"
                       )}
                     >
                       {p.label}
@@ -112,17 +120,17 @@ export const TestingDashboard = () => {
               </div>
 
               <div>
-                <DotMatrixText color="text-red-600" className="mb-4">SEED_DATA</DotMatrixText>
+                <DotMatrixText color="text-nothing-yellow" className="mb-4">SEED_DATA</DotMatrixText>
                 <div className="grid grid-cols-2 gap-2">
                   <button 
                     onClick={injectHighMvsJd}
-                    className="py-3 bg-white/5 border border-white/5 rounded-xl text-[8px] font-mono uppercase text-white/40 hover:bg-white/10"
+                    className="py-3 bg-white/5 border border-white/5 rounded-xl text-[8px] font-mono uppercase text-white/40 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-nothing-yellow"
                   >
                     High Complexity JD
                   </button>
                   <button 
                     onClick={injectLowMvsJd}
-                    className="py-3 bg-white/5 border border-white/5 rounded-xl text-[8px] font-mono uppercase text-white/40 hover:bg-white/10"
+                    className="py-3 bg-white/5 border border-white/5 rounded-xl text-[8px] font-mono uppercase text-white/40 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-nothing-yellow"
                   >
                     Low Complexity JD
                   </button>
@@ -130,11 +138,11 @@ export const TestingDashboard = () => {
               </div>
 
               <div>
-                <DotMatrixText color="text-red-600" className="mb-4">SIMULATE_WEBHOOKS</DotMatrixText>
+                <DotMatrixText color="text-nothing-yellow" className="mb-4">SIMULATE_WEBHOOKS</DotMatrixText>
                 <div className="space-y-2">
                   <button 
                     onClick={injectHighSignalCommit}
-                    className="w-full py-3 bg-white/5 border border-white/5 rounded-xl text-[8px] font-mono uppercase text-white/40 hover:bg-white/10 flex items-center gap-3 px-4"
+                    className="w-full py-3 bg-white/5 border border-white/5 rounded-xl text-[8px] font-mono uppercase text-white/40 hover:bg-white/10 flex items-center gap-3 px-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-nothing-yellow"
                   >
                     <GitCommit size={12} /> GitHub Commit
                   </button>
@@ -143,11 +151,11 @@ export const TestingDashboard = () => {
                       memoryEngine.capture("Spent 4 hours tweaking the border-radius of the primary button to match Nothing OS 4.0 specs.", "manual");
                       window.dispatchEvent(new CustomEvent('memory_updated'));
                     }}
-                    className="w-full py-3 bg-white/5 border border-white/5 rounded-xl text-[8px] font-mono uppercase text-white/40 hover:bg-white/10 flex items-center gap-3 px-4"
+                    className="w-full py-3 bg-white/5 border border-white/5 rounded-xl text-[8px] font-mono uppercase text-white/40 hover:bg-white/10 flex items-center gap-3 px-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-nothing-yellow"
                   >
                     <Sliders size={12} /> Trigger Drift
                   </button>
-                  <button className="w-full py-3 bg-white/5 border border-white/5 rounded-xl text-[8px] font-mono uppercase text-white/40 hover:bg-white/10 flex items-center gap-3 px-4">
+                  <button className="w-full py-3 bg-white/5 border border-white/5 rounded-xl text-[8px] font-mono uppercase text-white/40 hover:bg-white/10 flex items-center gap-3 px-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-nothing-yellow">
                     <Database size={12} /> Substack Post
                   </button>
                 </div>
@@ -161,8 +169,8 @@ export const TestingDashboard = () => {
                       key={t}
                       onClick={() => setState(prev => ({ ...prev, systemTheme: t as any }))}
                       className={cn(
-                        "flex-1 py-2 rounded-lg text-[8px] font-mono uppercase transition-all",
-                        state.systemTheme === t ? "bg-white text-black" : "bg-white/5 text-white/40"
+                        "flex-1 py-2 rounded-lg text-[8px] font-mono uppercase transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-nothing-yellow",
+                        state.systemTheme === t ? "bg-white text-black" : "bg-white/5 text-white/40 hover:text-white/70"
                       )}
                     >
                       {t}

@@ -75,7 +75,7 @@ export const VentureVault = () => {
         <DotMatrixText>VENTURE_VAULT</DotMatrixText>
         <button 
           onClick={() => setIsAdding(true)}
-          className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white shadow-lg shadow-red-600/20"
+          className="w-10 h-10 rounded-full bg-nothing-yellow flex items-center justify-center text-black shadow-lg shadow-nothing-yellow/20"
         >
           <Plus size={20} />
         </button>
@@ -90,7 +90,7 @@ export const VentureVault = () => {
             className="bg-white/5 rounded-[2.5rem] p-8 border border-white/10 space-y-6"
           >
             <div className="flex justify-between items-center">
-              <DotMatrixText color="text-red-600">{editingId ? 'EDITING_NODE' : 'NEW_VENTURE_NODE'}</DotMatrixText>
+              <DotMatrixText color="text-nothing-yellow">{editingId ? 'EDITING_NODE' : 'NEW_VENTURE_NODE'}</DotMatrixText>
               <button onClick={resetForm} className="text-white/20 hover:text-white"><X size={20}/></button>
             </div>
 
@@ -99,7 +99,7 @@ export const VentureVault = () => {
                 placeholder="VENTURE_TITLE"
                 value={formData.title}
                 onChange={e => setFormData({...formData, title: e.target.value})}
-                className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 text-white font-display font-bold outline-none focus:border-red-600 transition-all"
+                className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 text-white font-display font-bold outline-none focus:border-nothing-yellow transition-all"
               />
               
               <div className="grid grid-cols-2 gap-4">
@@ -109,7 +109,7 @@ export const VentureVault = () => {
                     placeholder="INDUSTRY"
                     value={formData.industry}
                     onChange={e => setFormData({...formData, industry: e.target.value})}
-                    className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 pl-10 text-white text-xs font-mono outline-none focus:border-red-600 transition-all"
+                    className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 pl-10 text-white text-xs font-mono outline-none focus:border-nothing-yellow transition-all"
                   />
                 </div>
                 <div className="relative">
@@ -118,7 +118,7 @@ export const VentureVault = () => {
                     placeholder="TIMESTAMP"
                     value={formData.timestamp}
                     onChange={e => setFormData({...formData, timestamp: e.target.value})}
-                    className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 pl-10 text-white text-xs font-mono outline-none focus:border-red-600 transition-all"
+                    className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 pl-10 text-white text-xs font-mono outline-none focus:border-nothing-yellow transition-all"
                   />
                 </div>
               </div>
@@ -127,28 +127,28 @@ export const VentureVault = () => {
                 placeholder="PROBLEM_STATEMENT"
                 value={formData.problem}
                 onChange={e => setFormData({...formData, problem: e.target.value})}
-                className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 text-white text-sm outline-none focus:border-red-600 transition-all h-24 resize-none"
+                className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 text-white text-sm outline-none focus:border-nothing-yellow transition-all h-24 resize-none"
               />
 
               <textarea 
                 placeholder="LOGIC_APPLIED"
                 value={formData.logic}
                 onChange={e => setFormData({...formData, logic: e.target.value})}
-                className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 text-white text-sm outline-none focus:border-red-600 transition-all h-24 resize-none"
+                className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 text-white text-sm outline-none focus:border-nothing-yellow transition-all h-24 resize-none"
               />
 
               <textarea 
                 placeholder="OUTCOME_METRIC"
                 value={formData.outcome}
                 onChange={e => setFormData({...formData, outcome: e.target.value})}
-                className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 text-white text-sm outline-none focus:border-red-600 transition-all h-24 resize-none"
+                className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 text-white text-sm outline-none focus:border-nothing-yellow transition-all h-24 resize-none"
               />
 
               <textarea 
                 placeholder="THE_STORY (INSTA-STYLE)"
                 value={formData.story}
                 onChange={e => setFormData({...formData, story: e.target.value})}
-                className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 text-white text-sm outline-none focus:border-red-600 transition-all h-32 resize-none"
+                className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 text-white text-sm outline-none focus:border-nothing-yellow transition-all h-32 resize-none"
               />
 
               <div className="flex gap-4">
@@ -158,7 +158,7 @@ export const VentureVault = () => {
                     placeholder="EXTERNAL_LINK (MEDIUM/SUBSTACK)"
                     value={formData.link}
                     onChange={e => setFormData({...formData, link: e.target.value})}
-                    className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 pl-10 text-white text-xs font-mono outline-none focus:border-red-600 transition-all"
+                    className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 pl-10 text-white text-xs font-mono outline-none focus:border-nothing-yellow transition-all"
                   />
                 </div>
               </div>
@@ -170,7 +170,7 @@ export const VentureVault = () => {
                     placeholder="IMAGE_URL"
                     value={formData.imageUrl}
                     onChange={e => setFormData({...formData, imageUrl: e.target.value})}
-                    className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 pl-10 text-white text-xs font-mono outline-none focus:border-red-600 transition-all"
+                    className="w-full bg-black/20 border border-white/5 rounded-2xl p-4 pl-10 text-white text-xs font-mono outline-none focus:border-nothing-yellow transition-all"
                   />
                 </div>
                 <button className="px-6 bg-white/5 rounded-2xl text-white/40 hover:bg-white/10 transition-all flex items-center gap-2">
@@ -181,7 +181,7 @@ export const VentureVault = () => {
 
             <button 
               onClick={handleSave}
-              className="w-full py-5 bg-red-600 text-white font-bold uppercase tracking-widest text-xs rounded-full shadow-xl shadow-red-600/20 hover:bg-black transition-all flex items-center justify-center gap-3"
+              className="w-full py-5 bg-nothing-yellow text-black font-bold uppercase tracking-widest text-xs rounded-full shadow-xl shadow-nothing-yellow/20 hover:bg-black transition-all flex items-center justify-center gap-3"
             >
               <Save size={16} /> Commit to Vault
             </button>
@@ -210,7 +210,7 @@ export const VentureVault = () => {
                     </div>
                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button onClick={() => handleEdit(proof)} className="p-2 rounded-full bg-white/5 text-white/40 hover:text-white"><Settings size={14}/></button>
-                      <button onClick={() => handleDelete(proof.id)} className="p-2 rounded-full bg-white/5 text-red-600/40 hover:text-red-600"><Trash2 size={14}/></button>
+                      <button onClick={() => handleDelete(proof.id)} className="p-2 rounded-full bg-white/5 text-nothing-yellow/40 hover:text-nothing-yellow"><Trash2 size={14}/></button>
                     </div>
                   </div>
                   <div className="flex gap-2 flex-wrap">

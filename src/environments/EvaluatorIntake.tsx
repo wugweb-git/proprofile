@@ -55,7 +55,7 @@ export default function EvaluatorIntake() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans selection:bg-red-600 selection:text-white flex flex-col items-center justify-center p-8">
+    <div className="min-h-screen bg-black text-black font-sans selection:bg-nothing-yellow selection:text-black flex flex-col items-center justify-center p-8">
       
       <AnimatePresence mode="wait">
         {step === 'drop' ? (
@@ -67,7 +67,7 @@ export default function EvaluatorIntake() {
             className="w-full max-w-[800px] space-y-12"
           >
             <div className="flex flex-col items-center text-center space-y-4">
-              <DotMatrixText color="text-red-600">INTAKE_PORT // 01</DotMatrixText>
+              <DotMatrixText color="text-nothing-yellow">INTAKE_PORT // 01</DotMatrixText>
               <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tighter uppercase">
                 Silent Metabolism
               </h1>
@@ -78,7 +78,7 @@ export default function EvaluatorIntake() {
                 value={jdInput}
                 onChange={(e) => setJdInput(e.target.value)}
                 placeholder="Paste the Job Description or describe the system failure here."
-                className="w-full h-64 bg-white/5 border border-white/10 rounded-[2.5rem] p-12 text-xl font-light leading-relaxed outline-none focus:border-red-600 transition-all resize-none placeholder:text-white/10"
+                className="w-full h-64 bg-white/5 border border-white/10 rounded-[2.5rem] p-12 text-xl font-light leading-relaxed outline-none focus:border-nothing-yellow transition-all resize-none placeholder:text-white/10"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
                     runAudit();
@@ -90,7 +90,7 @@ export default function EvaluatorIntake() {
                 <button 
                   onClick={runAudit}
                   disabled={!jdInput.trim()}
-                  className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all disabled:opacity-20 disabled:grayscale"
+                  className="w-12 h-12 bg-nothing-yellow rounded-full flex items-center justify-center text-black hover:scale-110 active:scale-95 transition-all disabled:opacity-20 disabled:grayscale"
                 >
                   <ArrowRight size={20} />
                 </button>
@@ -105,16 +105,16 @@ export default function EvaluatorIntake() {
             className="w-full max-w-[700px] space-y-12"
           >
             <div className="flex justify-between items-center">
-              <button onClick={() => setStep('drop')} className="text-[10px] font-mono text-white/40 hover:text-red-600 transition-colors uppercase tracking-widest flex items-center gap-2">
+              <button onClick={() => setStep('drop')} className="text-[10px] font-mono text-white/40 hover:text-nothing-yellow transition-colors uppercase tracking-widest flex items-center gap-2">
                 <ChevronRight size={14} className="rotate-180" /> Back to Intake
               </button>
-              <DotMatrixText color="text-red-600">AUDIT_REPORT // 02</DotMatrixText>
+              <DotMatrixText color="text-nothing-yellow">AUDIT_REPORT // 02</DotMatrixText>
             </div>
 
             {isAuditing ? (
               <div className="space-y-8 py-24">
                 <div className="flex flex-col items-center gap-6">
-                  <div className="w-16 h-16 border-4 border-red-600/20 border-t-red-600 rounded-full animate-spin" />
+                  <div className="w-16 h-16 border-4 border-nothing-yellow/20 border-t-nothing-yellow rounded-full animate-spin" />
                   <DotMatrixText className="animate-pulse">SCANNING_SYSTEMIC_FIT...</DotMatrixText>
                 </div>
               </div>
@@ -124,8 +124,8 @@ export default function EvaluatorIntake() {
                   <div className="absolute top-0 right-0 p-8">
                     {auditResult?.includes('HANDSHAKE_AUTHORIZED') ? (
                       <div className="flex flex-col items-end">
-                        <ShieldCheck size={48} className="text-red-600 mb-2" />
-                        <span className="text-[10px] font-mono text-red-600 uppercase font-bold">Authorized</span>
+                        <ShieldCheck size={48} className="text-nothing-yellow mb-2" />
+                        <span className="text-[10px] font-mono text-nothing-yellow uppercase font-bold">Authorized</span>
                       </div>
                     ) : (
                       <AlertCircle size={48} className="text-white/10" />
@@ -143,7 +143,7 @@ export default function EvaluatorIntake() {
                   <motion.button 
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="w-full py-8 bg-red-600 rounded-[2rem] text-xl font-display font-bold uppercase tracking-widest hover:bg-red-700 transition-all shadow-[0_0_50px_rgba(220,38,38,0.3)]"
+                    className="w-full py-8 bg-nothing-yellow rounded-[2rem] text-xl font-display font-bold uppercase tracking-widest hover:bg-red-700 transition-all shadow-[0_0_50px_rgba(220,38,38,0.3)]"
                   >
                     Request Human Handshake
                   </motion.button>

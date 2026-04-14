@@ -43,7 +43,7 @@ export const MarketIntelligence = ({ mvsMode = 'spirit' }: { mvsMode?: 'capital'
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center px-2">
-        <DotMatrixText color="text-red-600">MARKET_INTELLIGENCE // GROUNDED</DotMatrixText>
+        <DotMatrixText color="text-nothing-yellow">MARKET_INTELLIGENCE // GROUNDED</DotMatrixText>
         <TrendingUp size={14} className="text-white/20" />
       </div>
 
@@ -51,7 +51,7 @@ export const MarketIntelligence = ({ mvsMode = 'spirit' }: { mvsMode?: 'capital'
         <button 
           onClick={fetchIntelligence}
           disabled={loading}
-          className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white hover:scale-105 transition-all disabled:opacity-50"
+          className="w-12 h-12 bg-nothing-yellow rounded-full flex items-center justify-center text-black hover:scale-105 transition-all disabled:opacity-50"
         >
           {loading ? <RefreshCw size={20} className="animate-spin" /> : <Search size={20} />}
         </button>
@@ -74,7 +74,7 @@ export const MarketIntelligence = ({ mvsMode = 'spirit' }: { mvsMode?: 'capital'
             className="nothing-card-dark p-8 space-y-6"
           >
             <div className="flex justify-between items-center border-b border-white/5 pb-4">
-              <DotMatrixText color="text-red-600">AGENTIC_REPORT</DotMatrixText>
+              <DotMatrixText color="text-nothing-yellow">AGENTIC_REPORT</DotMatrixText>
               <span className="text-[8px] font-mono text-white/20 uppercase tracking-widest">Source: Google Search</span>
             </div>
             
@@ -86,7 +86,7 @@ export const MarketIntelligence = ({ mvsMode = 'spirit' }: { mvsMode?: 'capital'
               <button className="flex-1 py-3 bg-white/5 rounded-full text-[8px] font-mono uppercase tracking-widest text-white/40 hover:bg-white/10 transition-all">
                 Save to Vault
               </button>
-              <button className="flex-1 py-3 bg-red-600 rounded-full text-[8px] font-mono uppercase tracking-widest text-white">
+              <button className="flex-1 py-3 bg-nothing-yellow rounded-full text-[8px] font-mono uppercase tracking-widest text-black">
                 Align Identity
               </button>
             </div>
@@ -100,7 +100,7 @@ export const MarketIntelligence = ({ mvsMode = 'spirit' }: { mvsMode?: 'capital'
       </AnimatePresence>
 
       <div className="bg-white/5 rounded-[2rem] p-6 flex gap-4 border border-white/5">
-        <Zap size={20} className="text-red-600 shrink-0" />
+        <Zap size={20} className="text-nothing-yellow shrink-0" />
         <p className="text-[10px] font-mono text-white/40 leading-relaxed uppercase tracking-wider">
           Search grounding allows the system to cross-reference your identity against live market data, ensuring your "Signals" remain competitive.
         </p>

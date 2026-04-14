@@ -15,7 +15,7 @@ export const MediaVault = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-red-600 selection:text-white font-mono">
+    <div className="min-h-screen bg-[#050505] text-black selection:bg-nothing-yellow selection:text-black font-mono">
       <div className="max-w-[800px] mx-auto px-8 pt-32 pb-40">
         <div className="flex justify-between items-center mb-16">
           <button 
@@ -25,7 +25,7 @@ export const MediaVault = () => {
             <ChevronRight size={20} className="rotate-180" />
           </button>
           <div className="text-center">
-            <DotMatrixText color="text-red-600">SYSTEM_ASSETS</DotMatrixText>
+            <DotMatrixText color="text-nothing-yellow">SYSTEM_ASSETS</DotMatrixText>
             <h1 className="text-4xl font-display font-bold tracking-tighter mt-2">Media Vault</h1>
           </div>
           <div className="w-12" />
@@ -38,7 +38,7 @@ export const MediaVault = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className="group relative aspect-square bg-white/5 rounded-[3rem] overflow-hidden border border-white/5 hover:border-red-600/30 transition-all"
+              className="group relative aspect-square bg-white/5 rounded-[3rem] overflow-hidden border border-white/5 hover:border-nothing-yellow/30 transition-all"
             >
               {item.type === 'IMAGE' ? (
                 <img 
@@ -62,7 +62,7 @@ export const MediaVault = () => {
               <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
-                    {item.type === 'IMAGE' ? <ImageIcon size={12} className="text-red-600" /> : <Video size={12} className="text-red-600" />}
+                    {item.type === 'IMAGE' ? <ImageIcon size={12} className="text-nothing-yellow" /> : <Video size={12} className="text-nothing-yellow" />}
                     <DotMatrixText color="text-white/60" className="text-[10px]">{item.type}</DotMatrixText>
                   </div>
                   <div className="text-xl font-display font-bold tracking-tight">{item.label}</div>

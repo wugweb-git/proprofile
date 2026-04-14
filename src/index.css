@@ -6,7 +6,7 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --font-display: "Space Grotesk", sans-serif;
   
-  --color-nothing-red: #FF0000;
+  --color-nothing-yellow: #FFD606;
   --color-nothing-black: #000000;
   --color-nothing-white: #FFFFFF;
   --color-nothing-gray: #F2F2F2;
@@ -51,8 +51,8 @@
     font-weight: 500;
   }
 
-  .nothing-red-glow {
-    box-shadow: 0 0 40px rgba(255, 0, 0, 0.15);
+  .nothing-yellow-glow {
+    box-shadow: 0 0 40px rgba(255, 214, 6, 0.15);
   }
 
   .hide-scrollbar {

@@ -16,7 +16,7 @@ export const NeuralTrace = () => {
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center px-2">
-        <DotMatrixText color="text-red-600">NEURAL_TRACE // VERIFICATION_LAYER</DotMatrixText>
+        <DotMatrixText color="text-nothing-yellow">NEURAL_TRACE // VERIFICATION_LAYER</DotMatrixText>
         <GitCommit size={14} className="text-white/20" />
       </div>
 
@@ -35,7 +35,7 @@ export const NeuralTrace = () => {
                   <div className="text-[10px] font-mono text-white/60 uppercase tracking-wider">ID: {trace.id}</div>
                 </div>
               </div>
-              <button className="text-white/20 hover:text-red-600 transition-colors">
+              <button className="text-white/20 hover:text-nothing-yellow transition-colors">
                 <ExternalLink size={14} />
               </button>
             </div>
@@ -46,12 +46,12 @@ export const NeuralTrace = () => {
 
             <div className="pt-4 border-t border-white/5 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <LinkIcon size={12} className="text-red-600" />
+                <LinkIcon size={12} className="text-nothing-yellow" />
                 <span className="text-[8px] font-mono text-white/40 uppercase tracking-widest">Linked Signals</span>
               </div>
               <div className="flex gap-2">
                 {MOCK_SIGNALS.slice(0, 1).map(s => (
-                  <span key={s.id} className="px-2 py-1 bg-red-600/10 rounded-full text-[8px] font-mono text-red-600 uppercase tracking-widest border border-red-600/20">
+                  <span key={s.id} className="px-2 py-1 bg-nothing-yellow/10 rounded-full text-[8px] font-mono text-nothing-yellow uppercase tracking-widest border border-nothing-yellow/20">
                     {s.label}
                   </span>
                 ))}
@@ -61,8 +61,8 @@ export const NeuralTrace = () => {
         ))}
       </div>
 
-      <div className="bg-red-600/5 rounded-[2rem] p-6 border border-red-600/10 flex gap-4">
-        <GitCommit size={20} className="text-red-600 shrink-0" />
+      <div className="bg-nothing-yellow/5 rounded-[2rem] p-6 border border-nothing-yellow/10 flex gap-4">
+        <GitCommit size={20} className="text-nothing-yellow shrink-0" />
         <p className="text-[10px] font-mono text-white/40 leading-relaxed uppercase tracking-wider">
           The Verification Layer ensures every AI-synthesized claim is backed by a raw temporal trace. This creates an immutable audit trail for your identity.
         </p>

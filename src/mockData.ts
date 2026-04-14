@@ -77,7 +77,7 @@ export const MOCK_PROOFS: SystemProof[] = [
     story: 'How we used gamification to drive trust in a legacy banking environment.',
     imageUrl: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
     timestamp: '2024.01',
-    link: '#'
+    link: 'https://example.com/case-study'
   },
   {
     id: 'sys_adneto',
@@ -90,7 +90,7 @@ export const MOCK_PROOFS: SystemProof[] = [
     story: 'Automating the bridge between product vision and engineering execution.',
     imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
     timestamp: '2023.11',
-    link: '#'
+    link: 'https://example.com/case-study'
   },
   {
     id: 'sys_manyavar',
@@ -103,7 +103,7 @@ export const MOCK_PROOFS: SystemProof[] = [
     story: 'Fixing the operational logic of a multi-channel retail giant.',
     imageUrl: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80',
     timestamp: '2023.08',
-    link: '#'
+    link: 'https://example.com/case-study'
   },
   {
     id: 'sys_cognitive',
@@ -221,4 +221,56 @@ export const MOCK_HOLD: string[] = [
   'Tanmay to audit GMB & Edit. Shreya to send extensive questionnaire.',
   'Subscription for SEMRush.',
   'Netguru uses progressive CTAs on 792-word Angular blogs.',
+];
+
+
+// ============================================================================
+// PHASE 2 SUPABASE MOCKS : VENTURE VAULT & IDENTITY PILLARS
+// ============================================================================
+
+export const MOCK_IDENTITY_PILLARS = [
+  { id: '1', type: 'Origin', content: 'The 0→1 Mindset (Logic > Surface)', active: true },
+  { id: '2', type: 'Stack', content: '11+ Industries Orchestrator', active: true },
+  { id: '3', type: 'Philosophy', content: 'Systemic Unfucking over cosmetic patching.', active: true },
+  { id: '4', type: 'Obsession', content: 'Agentic AI Workflows', active: true },
+];
+
+export const MOCK_VENTURES = [
+  { id: 'v1', name: 'Fintech Core Pivot', phase: 'Scaling', role: 'Architect', logic_tags: ['Systems', 'Security', 'Finance'] },
+  { id: 'v2', name: 'F&B Decentralization', phase: '0->1', role: 'Founder', logic_tags: ['Ops', 'Logistics', 'Incentives'] },
+  { id: 'v3', name: 'Retail UX Overhaul', phase: 'Scaling', role: 'Delivery', logic_tags: ['Product', 'UX'] }
+];
+
+export const MOCK_EXPERIENCE_MATRIX = [
+  {
+    id: 'e1',
+    venture_id: 'v1',
+    title: 'Anti-Fragile Ledger Resilience',
+    industry: ['Fintech'],
+    legacy_lessons: 'Built this in 2023. Shows why rigid systems eventually break under velocity. The logic remains core for LLM orchestrations today.',
+    logic_applied: 'Decentralized state verification',
+    content_markdown: '# The Fintech Pivot
+When the ledger failed...'
+  },
+  {
+    id: 'e2',
+    venture_id: 'v2',
+    title: 'Crisis Response at Kitchen X',
+    industry: ['F&B', 'Logistics'],
+    legacy_lessons: 'We survived a 40% supply chain drop not by shouting louder, but by rewiring the incentive loop.',
+    logic_applied: 'Temporary Circuit Breaker & Decentralized Incentives',
+    content_markdown: '# The Death Spiral
+Stopping orders to save the brand.'
+  }
+];
+
+
+// ============================================================================
+// PHASE 3: ADAPTIVE SOCIAL PROOF (REFERRAL WEB)
+// ============================================================================
+
+export const MOCK_TESTIMONIALS = [
+  { id: 't1', persona: 'Architect', text: 'Vedanshu rebuilt our decentralized routing logic overnight. He doesn't write code; he writes structural inevitabilities.', author: 'CTO, Fintech Corp' },
+  { id: 't2', persona: 'Founder', text: 'The pivot mapped out cut our burn rate by 40%. Direct, ROI-focused operations without the agency fluff.', author: 'CEO, Kitchen X' },
+  { id: 't3', persona: 'Coach', text: 'He has an empathetic grip on systemic anxiety. The session cleared my mental stack immediately.', author: 'Series A Founder' }
 ];

@@ -87,7 +87,7 @@ export const LogicTraceModal = () => {
             
             <div className="relative p-8 pt-12">
               <div className="flex justify-between items-center mb-12">
-                <DotMatrixText color="text-red-600">LOGIC_TRACE // ANCESTRY_OF_A_THOUGHT</DotMatrixText>
+                <DotMatrixText color="text-nothing-yellow">LOGIC_TRACE // ANCESTRY_OF_A_THOUGHT</DotMatrixText>
                 <button onClick={closeTrace} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
                   <X size={20} />
                 </button>
@@ -95,18 +95,18 @@ export const LogicTraceModal = () => {
 
               <div className="space-y-16 relative">
                 {/* Neural Thread (Visual Connection) */}
-                <div className="absolute left-[19px] top-8 bottom-8 w-[2px] bg-gradient-to-b from-red-600 via-red-600/40 to-white/5" />
+                <div className="absolute left-[19px] top-8 bottom-8 w-[2px] bg-gradient-to-b from-nothing-yellow via-nothing-yellow/40 to-white/5" />
 
                 {/* STAGE 1: RAW CAPTURE */}
                 <div className="flex gap-6 relative group">
-                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20 z-10 group-hover:border-red-600/50 transition-colors">
+                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20 z-10 group-hover:border-nothing-yellow/50 transition-colors">
                     <Database size={16} />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-[10px] font-mono text-white/20 uppercase tracking-widest">RAW_CAPTURE</span>
                       <div className="h-px w-8 bg-white/10" />
-                      <span className="text-[10px] font-mono text-red-600 font-bold">{ancestry.raw.date}</span>
+                      <span className="text-[10px] font-mono text-nothing-yellow font-bold">{ancestry.raw.date}</span>
                     </div>
                     <div className="bg-white/5 rounded-[2rem] p-6 border border-white/5">
                       <p className="text-sm text-white/40 font-mono italic">
@@ -118,16 +118,16 @@ export const LogicTraceModal = () => {
 
                 {/* STAGE 2: SOCRATIC DISCUSSION */}
                 <div className="flex gap-6 relative group">
-                  <div className="w-10 h-10 rounded-full bg-red-600/20 border border-red-600/40 flex items-center justify-center text-red-600 z-10 shadow-[0_0_15px_rgba(220,38,38,0.2)]">
+                  <div className="w-10 h-10 rounded-full bg-nothing-yellow/20 border border-nothing-yellow/40 flex items-center justify-center text-nothing-yellow z-10 shadow-[0_0_15px_rgba(220,38,38,0.2)]">
                     <ChevronRight size={16} />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="text-[10px] font-mono text-red-600 uppercase tracking-widest">SOCRATIC_EVOLUTION</span>
-                      <div className="h-px w-8 bg-red-600/20" />
+                      <span className="text-[10px] font-mono text-nothing-yellow uppercase tracking-widest">SOCRATIC_EVOLUTION</span>
+                      <div className="h-px w-8 bg-nothing-yellow/20" />
                       <span className="text-[10px] font-mono text-white/40">{ancestry.evolution.date}</span>
                     </div>
-                    <div className="bg-red-600/5 rounded-[2rem] p-6 border border-red-600/10">
+                    <div className="bg-nothing-yellow/5 rounded-[2rem] p-6 border border-nothing-yellow/10">
                       <p className="text-sm text-white/80 leading-relaxed">
                         "{ancestry.evolution.content}"
                       </p>
@@ -137,7 +137,7 @@ export const LogicTraceModal = () => {
 
                 {/* STAGE 3: FINAL PUBLIC SIGNAL */}
                 <div className="flex gap-6 relative group">
-                  <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white z-10 shadow-xl shadow-red-600/40">
+                  <div className="w-10 h-10 rounded-full bg-nothing-yellow flex items-center justify-center text-black z-10 shadow-xl shadow-nothing-yellow/40">
                     <GitCommit size={16} />
                   </div>
                   <div className="flex-1">
@@ -152,7 +152,7 @@ export const LogicTraceModal = () => {
                         {ancestry.signal.content}
                       </p>
                       <div className="flex items-center gap-2">
-                        <Shield size={10} className="text-red-600" />
+                        <Shield size={10} className="text-nothing-yellow" />
                         <span className="text-[8px] font-mono text-white/40 uppercase tracking-widest">Verified_via_Logic_Commit</span>
                       </div>
                     </div>

@@ -77,7 +77,7 @@ export const SyncCenter = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center px-2">
-        <DotMatrixText color="text-red-600">EXTERNAL_SYNC_VECTORS</DotMatrixText>
+        <DotMatrixText color="text-nothing-yellow">EXTERNAL_SYNC_VECTORS</DotMatrixText>
         <RefreshCw size={14} className="text-white/20 animate-spin-slow" />
       </div>
 
@@ -91,7 +91,7 @@ export const SyncCenter = () => {
             <div className="flex items-center gap-4">
               <div className={cn(
                 "w-10 h-10 rounded-full flex items-center justify-center",
-                platform.status === 'connected' ? "bg-red-600/10 text-red-600" : "bg-white/5 text-white/20"
+                platform.status === 'connected' ? "bg-nothing-yellow/10 text-nothing-yellow" : "bg-white/5 text-white/20"
               )}>
                 {platform.icon}
               </div>
@@ -100,7 +100,7 @@ export const SyncCenter = () => {
                 <div className="flex items-center gap-2">
                   <span className={cn(
                     "text-[8px] font-mono uppercase tracking-widest",
-                    platform.status === 'connected' ? "text-red-600" : "text-white/20"
+                    platform.status === 'connected' ? "text-nothing-yellow" : "text-white/20"
                   )}>
                     {platform.status}
                   </span>
@@ -117,7 +117,7 @@ export const SyncCenter = () => {
               onClick={() => toggleSync(platform.id)}
               className={cn(
                 "px-4 py-2 rounded-full text-[8px] font-mono uppercase tracking-widest transition-all",
-                platform.status === 'connected' ? "bg-white/5 text-white/40 hover:bg-white/10" : "bg-red-600 text-white"
+                platform.status === 'connected' ? "bg-white/5 text-white/40 hover:bg-white/10" : "bg-nothing-yellow text-black"
               )}
             >
               {platform.status === 'connected' ? 'Disconnect' : platform.status === 'syncing' ? 'Syncing...' : 'Connect'}
@@ -126,9 +126,9 @@ export const SyncCenter = () => {
         ))}
       </div>
 
-      <div className="bg-red-600/5 border border-red-600/10 rounded-[2rem] p-6 flex gap-4">
-        <AlertCircle size={20} className="text-red-600 shrink-0" />
-        <p className="text-[10px] font-mono text-red-600/60 leading-relaxed uppercase tracking-wider">
+      <div className="bg-nothing-yellow/5 border border-nothing-yellow/10 rounded-[2rem] p-6 flex gap-4">
+        <AlertCircle size={20} className="text-nothing-yellow shrink-0" />
+        <p className="text-[10px] font-mono text-nothing-yellow/60 leading-relaxed uppercase tracking-wider">
           System is actively indexing Naukri & LinkedIn for JD overlaps. Real-time Notion sync is currently in Expansive Mode.
         </p>
       </div>

@@ -43,7 +43,7 @@ export const VoiceInsightCard = ({ insight, isAuthorized = false }: { insight: A
   return (
     <div className={cn(
       "bg-white/5 rounded-[2rem] p-6 border transition-all group relative overflow-hidden",
-      isLocked ? "border-white/5 opacity-60" : "border-white/10 hover:border-red-600/20"
+      isLocked ? "border-white/5 opacity-60" : "border-white/10 hover:border-nothing-yellow/20"
     )}>
       <div className="absolute inset-0 nothing-dot-grid opacity-5 pointer-events-none" />
       
@@ -51,9 +51,9 @@ export const VoiceInsightCard = ({ insight, isAuthorized = false }: { insight: A
         <div className="flex justify-between items-start mb-4">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
-              <DotMatrixText color={isLocked ? "text-white/20" : "text-red-600"}>SPARK // {insight.id.toUpperCase()}</DotMatrixText>
+              <DotMatrixText color={isLocked ? "text-white/20" : "text-nothing-yellow"}>SPARK // {insight.id.toUpperCase()}</DotMatrixText>
               {insight.isGated && (
-                <div className={cn("p-1 rounded-full", isLocked ? "bg-white/5 text-white/20" : "bg-red-600/10 text-red-600")}>
+                <div className={cn("p-1 rounded-full", isLocked ? "bg-white/5 text-white/20" : "bg-nothing-yellow/10 text-nothing-yellow")}>
                   {isLocked ? <Lock size={10} /> : <Unlock size={10} />}
                 </div>
               )}
@@ -67,7 +67,7 @@ export const VoiceInsightCard = ({ insight, isAuthorized = false }: { insight: A
             disabled={isLocked}
             className={cn(
               "w-12 h-12 rounded-full flex items-center justify-center transition-all",
-              isLocked ? "bg-white/5 text-white/10" : "bg-red-600 text-white shadow-lg shadow-red-600/20 hover:scale-105"
+              isLocked ? "bg-white/5 text-white/10" : "bg-nothing-yellow text-black shadow-lg shadow-nothing-yellow/20 hover:scale-105"
             )}
           >
             {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="ml-1" />}
@@ -78,7 +78,7 @@ export const VoiceInsightCard = ({ insight, isAuthorized = false }: { insight: A
           {/* Progress Bar */}
           <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden relative">
             <motion.div 
-              className="absolute inset-y-0 left-0 bg-red-600"
+              className="absolute inset-y-0 left-0 bg-nothing-yellow"
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.1 }}
             />
@@ -110,7 +110,7 @@ export const VoiceInsightCard = ({ insight, isAuthorized = false }: { insight: A
 
           {isLocked && (
             <div className="pt-2">
-              <p className="text-[10px] font-mono text-red-600/60 uppercase tracking-widest">
+              <p className="text-[10px] font-mono text-nothing-yellow/60 uppercase tracking-widest">
                 [AUTHORIZATION_REQUIRED_FOR_PLAYBACK]
               </p>
             </div>

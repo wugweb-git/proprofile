@@ -1,123 +1,129 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { motion } from 'framer-motion';
-
-interface DataPoint {
-  axis: string;
-  value: number;
-}
-
-const MOCK_HEATMAP_DATA: DataPoint[] = [
-  { axis: 'Systems Thinking', value: 0.95 },
-  { axis: 'Operational Logic', value: 0.88 },
-  { axis: 'AI Synthesis', value: 0.92 },
-  { axis: 'Product Strategy', value: 0.85 },
-  { axis: 'Technical Depth', value: 0.75 },
-  { axis: 'UX Psychology', value: 0.82 },
-];
 
 export const CognitiveHeatmap = () => {
-  const svgRef = useRef<SVGSVGElement>(null);
+  const d3Container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!svgRef.current) return;
+    if (d3Container.current) {
+      // Clear previous instances
+      d3.select(d3Container.current).select('svg').remove();
 
-    const width = 400;
-    const height = 400;
-    const margin = 50;
-    const radius = Math.min(width, height) / 2 - margin;
+      const width = d3Container.current.clientWidth;
+      const height = 400;
 
-    const svg = d3.select(svgRef.current)
-      .attr('viewBox', `0 0 ${width} ${height}`)
-      .attr('preserveAspectRatio', 'xMidYMid meet');
+      const svg = d3.select(d3Container.current)
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .style('overflow', 'visible');
 
-    svg.selectAll('*').remove();
+      // Mock Vector Clusters (M1.2 Sim)
+      const nodes = [
+        { id: 'Systemic Unfucking', r: 30, x: width * 0.3, y: height * 0.5, group: 1 },
+        { id: 'Decentralized Ops', r: 20, x: width * 0.15, y: height * 0.3, group: 1 },
+        { id: 'Fintech Structuring', r: 25, x: width * 0.45, y: height * 0.25, group: 2 },
+        { id: 'Agentic Context', r: 35, x: width * 0.7, y: height * 0.45, group: 3 },
+        { id: 'RAG Infrastructure', r: 20, x: width * 0.85, y: height * 0.7, group: 3 },
+        { id: '0→1 Mindset', r: 15, x: width * 0.5, y: height * 0.8, group: 1 },
+      ];
 
-    const g = svg.append('g')
-      .attr('transform', `translate(${width / 2}, ${height / 2})`);
+      const links = [
+        { source: 'Systemic Unfucking', target: 'Decentralized Ops', value: 2 },
+        { source: 'Systemic Unfucking', target: 'Fintech Structuring', value: 3 },
+        { source: 'Agentic Context', target: 'RAG Infrastructure', value: 4 },
+        { source: 'Agentic Context', target: 'Fintech Structuring', value: 1 },
+        { source: 'Systemic Unfucking', target: '0→1 Mindset', value: 2 },
+      ];
 
-    const angleStep = (Math.PI * 2) / MOCK_HEATMAP_DATA.length;
+      const simulation = d3.forceSimulation(nodes as d3.SimulationNodeDatum[])
+        .force('link', d3.forceLink(links).id((d: any) => d.id).distance(120))
+        .force('charge', d3.forceManyBody().strength(-300))
+        .force('center', d3.forceCenter(width / 2, height / 2));
 
-    // Draw Grid (Circles)
-    const levels = 5;
-    for (let i = 1; i <= levels; i++) {
-      const r = (radius / levels) * i;
-      g.append('circle')
-        .attr('r', r)
-        .attr('fill', 'none')
-        .attr('stroke', 'rgba(255, 255, 255, 0.05)')
-        .attr('stroke-dasharray', '2,2');
+      // Draw Links
+      const link = svg.append('g')
+        .attr('stroke', '#000')
+        .attr('stroke-opacity', 0.1)
+        .selectAll('line')
+        .data(links)
+        .join('line')
+        .attr('stroke-width', d => Math.sqrt(d.value));
+
+      // Draw Nodes
+      const node = svg.append('g')
+        .selectAll('circle')
+        .data(nodes)
+        .join('circle')
+        .attr('r', d => d.r)
+        .attr('fill', d => d.group === 3 ? '#FFD606' : '#f0f0f0') 
+        .attr('stroke', '#000')
+        .attr('stroke-width', 1.5)
+        .call(d3.drag()
+            .on('start', dragstarted)
+            .on('drag', dragged)
+            .on('end', dragended) as any);
+
+      // Node Labels
+      const label = svg.append('g')
+        .selectAll('text')
+        .data(nodes)
+        .join('text')
+        .text(d => d.id)
+        .attr('font-size', '10px')
+        .attr('font-family', 'monospace')
+        .attr('text-anchor', 'middle')
+        .attr('dy', d => d.r + 12)
+        .attr('fill', '#00000080');
+
+      simulation.on('tick', () => {
+        link
+          .attr('x1', (d: any) => d.source.x)
+          .attr('y1', (d: any) => d.source.y)
+          .attr('x2', (d: any) => d.target.x)
+          .attr('y2', (d: any) => d.target.y);
+
+        node
+          .attr('cx', (d: any) => d.x)
+          .attr('cy', (d: any) => d.y);
+          
+        label
+          .attr('x', (d: any) => d.x)
+          .attr('y', (d: any) => d.y);
+      });
+
+      function dragstarted(event: any) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        event.subject.fx = event.subject.x;
+        event.subject.fy = event.subject.y;
+      }
+
+      function dragged(event: any) {
+        event.subject.fx = event.x;
+        event.subject.fy = event.y;
+      }
+
+      function dragended(event: any) {
+        if (!event.active) simulation.alphaTarget(0);
+        event.subject.fx = null;
+        event.subject.fy = null;
+      }
     }
-
-    // Draw Axes
-    const axis = g.selectAll('.axis')
-      .data(MOCK_HEATMAP_DATA)
-      .enter()
-      .append('g')
-      .attr('class', 'axis');
-
-    axis.append('line')
-      .attr('x1', 0)
-      .attr('y1', 0)
-      .attr('x2', (d, i) => radius * Math.cos(angleStep * i - Math.PI / 2))
-      .attr('y2', (d, i) => radius * Math.sin(angleStep * i - Math.PI / 2))
-      .attr('stroke', 'rgba(255, 255, 255, 0.1)');
-
-    // Draw Labels
-    axis.append('text')
-      .attr('x', (d, i) => (radius + 20) * Math.cos(angleStep * i - Math.PI / 2))
-      .attr('y', (d, i) => (radius + 20) * Math.sin(angleStep * i - Math.PI / 2))
-      .attr('text-anchor', (d, i) => {
-        const angle = angleStep * i - Math.PI / 2;
-        if (angle > -Math.PI / 2 && angle < Math.PI / 2) return 'start';
-        if (angle === -Math.PI / 2 || angle === Math.PI / 2) return 'middle';
-        return 'end';
-      })
-      .attr('dy', '0.35em')
-      .attr('fill', 'rgba(255, 255, 255, 0.4)')
-      .attr('font-size', '8px')
-      .attr('font-family', 'JetBrains Mono, monospace')
-      .text(d => d.axis.toUpperCase());
-
-    // Draw Data Path
-    const line = d3.lineRadial<DataPoint>()
-      .angle((d, i) => i * angleStep)
-      .radius(d => d.value * radius)
-      .curve(d3.curveLinearClosed);
-
-    g.append('path')
-      .datum(MOCK_HEATMAP_DATA)
-      .attr('d', line)
-      .attr('fill', 'rgba(220, 38, 38, 0.2)')
-      .attr('stroke', '#dc2626')
-      .attr('stroke-width', 2)
-      .attr('class', 'data-path');
-
-    // Draw Data Points
-    g.selectAll('.dot')
-      .data(MOCK_HEATMAP_DATA)
-      .enter()
-      .append('circle')
-      .attr('cx', (d, i) => d.value * radius * Math.cos(angleStep * i - Math.PI / 2))
-      .attr('cy', (d, i) => d.value * radius * Math.sin(angleStep * i - Math.PI / 2))
-      .attr('r', 3)
-      .attr('fill', '#dc2626')
-      .attr('stroke', '#000')
-      .attr('stroke-width', 1);
-
   }, []);
 
   return (
-    <div className="relative w-full aspect-square bg-white/5 rounded-[3rem] border border-white/5 p-8 flex flex-col items-center justify-center overflow-hidden">
-      <div className="absolute top-8 left-8">
-        <span className="nothing-dot-matrix text-red-600">COGNITIVE_HEATMAP</span>
-        <p className="text-[8px] font-mono text-white/20 uppercase mt-1">Skill Saturation // Real-time</p>
+    <div className="w-full bg-white border-2 border-black/5 rounded-[2rem] p-8 shadow-sm overflow-hidden mb-16 relative group">
+      <div className="absolute top-8 left-8 z-10 flex flex-col pointer-events-none">
+        <span className="text-[10px] font-mono uppercase tracking-widest text-black/40 bg-nothing-yellow px-2 py-1 inline-flex w-max">
+          M5.2: Cognitive Heatmap
+        </span>
+        <h3 className="font-display font-bold text-2xl mt-2 tracking-tight">Active Pulse Map</h3>
+        <p className="text-black/50 text-xs font-mono max-w-sm mt-1">
+          Real-time constellation derived from vector overlaps (PgVector mapping) within the last 30 days.
+        </p>
       </div>
-      <svg ref={svgRef} className="w-full h-full" />
-      <div className="absolute bottom-8 right-8 text-right">
-        <span className="text-[10px] font-mono text-white/40 uppercase">Systemic_Fit</span>
-        <div className="text-2xl font-display font-bold text-white">94.2%</div>
-      </div>
+
+      <div ref={d3Container} className="w-full relative h-[400px] cursor-grab active:cursor-grabbing" />
     </div>
   );
 };

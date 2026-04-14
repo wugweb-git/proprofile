@@ -21,7 +21,7 @@ import { MOCK_IDENTITY, MOCK_SIGNALS, MOCK_AUDIO_INSIGHTS, MOCK_PROOFS } from '.
 import { AudioInsight, Signal } from '../types';
 
 // --- NOTHING OS COMPONENTS ---
-const DotMatrixText = ({ children, className, color = 'text-white/40' }: { children: React.ReactNode, className?: string, color?: string }) => (
+const DotMatrixText = ({ children, className, color = 'text-white/60' }: { children: React.ReactNode, className?: string, color?: string }) => (
   <span className={cn("nothing-dot-matrix", color, className)}>
     {children}
   </span>
@@ -32,7 +32,7 @@ const NothingToggle = ({ active, onClick }: { active: boolean, onClick: () => vo
     onClick={onClick}
     className={cn(
       "w-12 h-6 rounded-full p-1 transition-colors duration-300 ease-in-out flex items-center",
-      active ? "bg-red-600" : "bg-white/10"
+      active ? "bg-nothing-yellow" : "bg-white/10"
     )}
   >
     <motion.div 
@@ -44,10 +44,10 @@ const NothingToggle = ({ active, onClick }: { active: boolean, onClick: () => vo
 );
 
 const VisibilitySlider = ({ label, value, onChange }: { label: string, value: number, onChange: (val: number) => void }) => (
-  <div className="bg-white/5 rounded-[2rem] p-6 border border-white/5 space-y-4">
+  <div className="bg-white/10 rounded-[2rem] p-6 border border-white/5 space-y-4">
     <div className="flex justify-between items-center">
       <span className="font-display font-bold text-white text-sm uppercase tracking-tight">{label}</span>
-      <span className="font-mono text-[10px] text-red-600 font-bold">{value}%</span>
+      <span className="font-mono text-[10px] text-nothing-yellow font-bold">{value}%</span>
     </div>
     <input 
       type="range" 
@@ -55,7 +55,7 @@ const VisibilitySlider = ({ label, value, onChange }: { label: string, value: nu
       max="100" 
       value={value} 
       onChange={(e) => onChange(parseInt(e.target.value))}
-      className="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer accent-red-600"
+      className="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer accent-nothing-yellow"
     />
   </div>
 );
@@ -88,17 +88,18 @@ const SwipeCard = ({ item, onSwipeLeft, onSwipeRight, onSynthesize, isTop }: { i
 
       <div className="relative z-10 flex flex-col h-full">
         <div className="flex justify-between items-center mb-8">
-          <DotMatrixText color="text-red-600">HOLD // RAW</DotMatrixText>
+          <DotMatrixText color="text-nothing-yellow">HOLD // RAW</DotMatrixText>
           <div className="flex items-center gap-4">
             {isTop && (
               <button 
                 onClick={(e) => { e.stopPropagation(); onSynthesize(); }}
-                className="w-8 h-8 rounded-full bg-red-600/10 flex items-center justify-center text-red-600 hover:bg-red-600 hover:text-white transition-all"
+                aria-label="Synthesize Memory"
+                className="w-8 h-8 rounded-full bg-nothing-yellow/10 flex items-center justify-center text-nothing-yellow hover:bg-nothing-yellow hover:text-black transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-nothing-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-[#111]"
               >
                 <Zap size={14} />
               </button>
             )}
-            <span className="font-mono text-[10px] text-white/20 uppercase">
+            <span className="font-mono text-[10px] text-white/50 uppercase">
               {item.timestamp ? new Date(item.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'NOW'}
             </span>
           </div>
@@ -112,10 +113,10 @@ const SwipeCard = ({ item, onSwipeLeft, onSwipeRight, onSynthesize, isTop }: { i
         
         {isTop && (
           <div className="flex justify-between items-center pt-8 border-t border-white/5">
-            <div className="flex items-center gap-2 text-white/30">
+            <div className="flex items-center gap-2 text-white/50">
               <X size={16}/> <span className="text-[10px] font-mono uppercase tracking-widest">Discard</span>
             </div>
-            <div className="flex items-center gap-2 text-red-600">
+            <div className="flex items-center gap-2 text-nothing-yellow">
               <span className="text-[10px] font-mono uppercase tracking-widest">Promote</span> <Check size={16}/>
             </div>
           </div>
@@ -373,7 +374,7 @@ export default function OwnerHub() {
           <span className="text-xs font-bold text-white">
             {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </span>
-          <div className="flex items-center gap-2 text-white/40">
+          <div className="flex items-center gap-2 text-white/60">
             <SignalIcon size={14} />
             <Wifi size={14} />
             <Battery size={14} />
@@ -394,43 +395,43 @@ export default function OwnerHub() {
                   {time.getHours()}:{time.getMinutes().toString().padStart(2, '0')}
                 </h1>
                 <div className="flex items-center gap-4">
-                  <DotMatrixText color="text-red-600">PRISM_OS // 4.0</DotMatrixText>
+                  <DotMatrixText color="text-nothing-yellow">PRISM_OS // 4.0</DotMatrixText>
                   <div className="flex items-center gap-2">
-                    <MapPin size={10} className="text-white/20" />
-                    <span className="text-[10px] font-mono text-white/20 uppercase">{state.location}</span>
+                    <MapPin size={10} className="text-white/50" />
+                    <span className="text-[10px] font-mono text-white/50 uppercase">{state.location}</span>
                   </div>
                 </div>
                 
                 {/* System Health & MVS Toggle */}
                 <div className="mt-10 mb-8 space-y-6">
-                  <div className="bg-white/5 rounded-[2.5rem] p-6 border border-white/5">
+                  <div className="bg-white/10 rounded-[2.5rem] p-6 border border-white/5">
                     <div className="flex justify-between items-center mb-4">
-                      <DotMatrixText color="text-white/40">SPIRIT_DECAY_GAUGE</DotMatrixText>
+                      <DotMatrixText color="text-white/60">SPIRIT_DECAY_GAUGE</DotMatrixText>
                       <span className={cn(
                         "font-mono text-[10px] font-bold",
-                        spiritDecay > 50 ? "text-red-600" : "text-white/40"
+                        spiritDecay > 50 ? "text-nothing-yellow" : "text-white/60"
                       )}>{spiritDecay}%</span>
                     </div>
-                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
                       <motion.div 
                         initial={{ width: 0 }}
                         animate={{ width: `${spiritDecay}%` }}
                         className={cn(
                           "h-full transition-colors duration-500",
-                          spiritDecay > 70 ? "bg-red-600 nothing-red-glow" : 
+                          spiritDecay > 70 ? "bg-nothing-yellow nothing-yellow-glow" : 
                           spiritDecay > 40 ? "bg-orange-500" : "bg-white/20"
                         )}
                       />
                     </div>
-                    <p className="text-[8px] font-mono text-white/20 uppercase mt-3 tracking-widest">
+                    <p className="text-[8px] font-mono text-black/50 uppercase mt-3 tracking-widest">
                       {spiritDecay > 70 ? "CRITICAL_DRIFT_DETECTED // RECALIBRATE_NOW" : 
                        spiritDecay > 40 ? "MODERATE_ENTROPY // MONITOR_LOGIC" : "SYSTEM_STABLE // HIGH_ALIGNMENT"}
                     </p>
                   </div>
 
-                  <div className="relative h-14 bg-white/5 rounded-full p-1 flex items-center border border-white/10">
+                  <div className="relative h-14 bg-white/10 rounded-full p-1 flex items-center border border-white/10" role="group" aria-label="MVS Mode Selection">
                     <motion.div 
-                      className="absolute inset-y-1 rounded-full bg-red-600 shadow-[0_0_20px_rgba(220,38,38,0.4)] z-0"
+                      className="absolute inset-y-1 rounded-full bg-nothing-yellow shadow-[0_0_20px_rgba(220,38,38,0.4)] z-0"
                       initial={false}
                       animate={{ 
                         left: mvsMode === 'capital' ? '4px' : '50%',
@@ -440,18 +441,20 @@ export default function OwnerHub() {
                     />
                     <button 
                       onClick={() => setMvsMode('capital')}
+                      aria-pressed={mvsMode === 'capital'}
                       className={cn(
-                        "flex-1 h-full rounded-full z-10 text-[10px] font-mono uppercase tracking-[0.2em] transition-colors duration-500",
-                        mvsMode === 'capital' ? "text-white font-bold" : "text-white/20 hover:text-white/40"
+                        "flex-1 h-full rounded-full z-10 text-[10px] font-mono uppercase tracking-[0.2em] transition-colors duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                        mvsMode === 'capital' ? "text-black font-bold" : "text-black/50 hover:text-black/60"
                       )}
                     >
                       Capital
                     </button>
                     <button 
                       onClick={() => setMvsMode('spirit')}
+                      aria-pressed={mvsMode === 'spirit'}
                       className={cn(
-                        "flex-1 h-full rounded-full z-10 text-[10px] font-mono uppercase tracking-[0.2em] transition-colors duration-500",
-                        mvsMode === 'spirit' ? "text-white font-bold" : "text-white/20 hover:text-white/40"
+                        "flex-1 h-full rounded-full z-10 text-[10px] font-mono uppercase tracking-[0.2em] transition-colors duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                        mvsMode === 'spirit' ? "text-black font-bold" : "text-black/50 hover:text-black/60"
                       )}
                     >
                       Spirit
@@ -461,17 +464,18 @@ export default function OwnerHub() {
               </div>
 
               {/* Widgets */}
-              <div className="grid grid-cols-2 gap-4 mb-8 overflow-y-auto hide-scrollbar pr-2">
+              <div className="grid grid-cols-2 gap-4 mb-8 overflow-y-auto hide-scrollbar pr-2" role="region" aria-label="Widget Grid">
                 <button 
                   onClick={() => setActiveView('inbox')} 
+                  aria-label={`Inbox with ${unreadNudges} nudges`}
                   className={cn(
-                    "bg-white/5 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left relative overflow-hidden",
-                    unreadNudges > 0 && "border border-red-600/30"
+                    "bg-white/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-nothing-yellow",
+                    unreadNudges > 0 && "border border-nothing-yellow/30"
                   )}
                 >
-                  <MessageSquare size={20} className={cn(unreadNudges > 0 ? "text-red-600" : "text-white/40")} />
+                  <MessageSquare size={20} className={cn(unreadNudges > 0 ? "text-nothing-yellow" : "text-white/60")} />
                   <div>
-                    <div className={cn("text-2xl font-display font-bold", unreadNudges > 0 ? "text-red-600" : "text-white")}>
+                    <div className={cn("text-2xl font-display font-bold", unreadNudges > 0 ? "text-nothing-yellow" : "text-white")}>
                       {unreadNudges > 0 ? `${unreadNudges} NUDGES` : 'INBOX'}
                     </div>
                     <DotMatrixText>SOCRATIC_BRAIN</DotMatrixText>
@@ -480,90 +484,90 @@ export default function OwnerHub() {
                     <motion.div 
                       animate={{ opacity: [0.1, 0.3, 0.1] }}
                       transition={{ duration: 2, repeat: Infinity }}
-                      className="absolute inset-0 bg-red-600/5 pointer-events-none"
+                      className="absolute inset-0 bg-nothing-yellow/5 pointer-events-none"
                     />
                   )}
                 </button>
 
                 {mvsMode === 'capital' ? (
                   <>
-                    <button onClick={() => setActiveView('triage')} className="bg-white/5 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
-                      <Activity size={20} className="text-red-600" />
+                    <button onClick={() => setActiveView('triage')} className="bg-white/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
+                      <Activity size={20} className="text-nothing-yellow" />
                       <div>
-                        <div className="text-2xl font-display font-bold text-white">{holdItems.length}</div>
+                        <div className="text-2xl font-display font-bold text-black">{holdItems.length}</div>
                         <DotMatrixText>METABOLISM</DotMatrixText>
                       </div>
                     </button>
-                    <button onClick={() => setActiveView('consensus')} className="bg-white/5 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
-                      <Shield size={20} className="text-red-600" />
+                    <button onClick={() => setActiveView('consensus')} className="bg-white/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
+                      <Shield size={20} className="text-nothing-yellow" />
                       <div>
-                        <div className="text-2xl font-display font-bold text-white uppercase text-red-600">84%</div>
+                        <div className="text-2xl font-display font-bold text-black uppercase text-nothing-yellow">84%</div>
                         <DotMatrixText>CONSENSUS</DotMatrixText>
                       </div>
                     </button>
-                    <button onClick={() => setActiveView('intelligence')} className="bg-white/5 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
-                      <TrendingUp size={20} className="text-red-600" />
+                    <button onClick={() => setActiveView('intelligence')} className="bg-white/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
+                      <TrendingUp size={20} className="text-nothing-yellow" />
                       <div>
-                        <div className="text-2xl font-display font-bold text-white uppercase">Intel</div>
+                        <div className="text-2xl font-display font-bold text-black uppercase">Intel</div>
                         <DotMatrixText>MARKET_PULSE</DotMatrixText>
                       </div>
                     </button>
-                    <button onClick={() => setActiveView('telemetry')} className="bg-white/5 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
-                      <Wifi size={20} className="text-red-600" />
+                    <button onClick={() => setActiveView('telemetry')} className="bg-white/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
+                      <Wifi size={20} className="text-nothing-yellow" />
                       <div>
-                        <div className="text-2xl font-display font-bold text-white uppercase">Health</div>
+                        <div className="text-2xl font-display font-bold text-black uppercase">Health</div>
                         <DotMatrixText>SENSOR_STATUS</DotMatrixText>
                       </div>
                     </button>
-                    <button onClick={() => setActiveView('sync')} className="bg-white/5 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
-                      <RefreshCw size={20} className="text-red-600" />
+                    <button onClick={() => setActiveView('sync')} className="bg-white/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
+                      <RefreshCw size={20} className="text-nothing-yellow" />
                       <div>
-                        <div className="text-2xl font-display font-bold text-white uppercase">Sync</div>
+                        <div className="text-2xl font-display font-bold text-black uppercase">Sync</div>
                         <DotMatrixText>EXTERNAL_VECTORS</DotMatrixText>
                       </div>
                     </button>
                   </>
                 ) : (
                   <>
-                    <button onClick={() => setActiveView('spirit')} className="bg-red-600/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-red-600/20 transition-all text-left border border-red-600/20">
-                      <Plus size={20} className="text-red-600" />
+                    <button onClick={() => setActiveView('spirit')} className="bg-nothing-yellow/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-nothing-yellow/20 transition-all text-left border border-nothing-yellow/20">
+                      <Plus size={20} className="text-nothing-yellow" />
                       <div>
-                        <div className="text-2xl font-display font-bold text-white uppercase">Spirit</div>
-                        <DotMatrixText color="text-red-600">RAW_INGESTION</DotMatrixText>
+                        <div className="text-2xl font-display font-bold text-black uppercase">Spirit</div>
+                        <DotMatrixText color="text-nothing-yellow">RAW_INGESTION</DotMatrixText>
                       </div>
                     </button>
-                    <button onClick={() => setActiveView('inbox')} className="bg-white/5 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
-                      <Activity size={20} className={cn(spiritDecay > 20 ? "text-red-600" : "text-white/40")} />
+                    <button onClick={() => setActiveView('inbox')} className="bg-white/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
+                      <Activity size={20} className={cn(spiritDecay > 20 ? "text-nothing-yellow" : "text-black/60")} />
                       <div>
-                        <div className={cn("text-2xl font-display font-bold", spiritDecay > 20 ? "text-red-600" : "text-white")}>{spiritDecay}%</div>
+                        <div className={cn("text-2xl font-display font-bold", spiritDecay > 20 ? "text-nothing-yellow" : "text-black")}>{spiritDecay}%</div>
                         <DotMatrixText>SPIRIT_DECAY</DotMatrixText>
                       </div>
                     </button>
-                    <button onClick={() => setActiveView('personalization')} className="bg-white/5 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
-                      <Zap size={20} className="text-red-600" />
+                    <button onClick={() => setActiveView('personalization')} className="bg-white/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
+                      <Zap size={20} className="text-nothing-yellow" />
                       <div>
-                        <div className="text-2xl font-display font-bold text-white uppercase">Pillars</div>
+                        <div className="text-2xl font-display font-bold text-black uppercase">Pillars</div>
                         <DotMatrixText>CORE_PHILOSOPHY</DotMatrixText>
                       </div>
                     </button>
-                    <button onClick={() => setActiveView('temptation')} className="bg-white/5 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
-                      <Search size={20} className="text-white/40" />
+                    <button onClick={() => setActiveView('temptation')} className="bg-white/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
+                      <Search size={20} className="text-black/60" />
                       <div>
-                        <div className="text-2xl font-display font-bold text-white uppercase">Scout</div>
+                        <div className="text-2xl font-display font-bold text-black uppercase">Scout</div>
                         <DotMatrixText>MANUAL_PARSER</DotMatrixText>
                       </div>
                     </button>
-                    <button onClick={() => setActiveView('vault')} className="bg-white/5 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
-                      <Database size={20} className="text-red-600" />
+                    <button onClick={() => setActiveView('vault')} className="bg-white/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
+                      <Database size={20} className="text-nothing-yellow" />
                       <div>
-                        <div className="text-2xl font-display font-bold text-white uppercase">Vault</div>
+                        <div className="text-2xl font-display font-bold text-black uppercase">Vault</div>
                         <DotMatrixText>MEMORY_LAYER</DotMatrixText>
                       </div>
                     </button>
-                    <button onClick={() => setActiveView('magic')} className="bg-white/5 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
-                      <Share size={20} className="text-red-600" />
+                    <button onClick={() => setActiveView('magic')} className="bg-white/10 rounded-[2rem] p-6 flex flex-col gap-4 hover:bg-white/10 transition-all text-left">
+                      <Share size={20} className="text-nothing-yellow" />
                       <div>
-                        <div className="text-2xl font-display font-bold text-white uppercase">Magic</div>
+                        <div className="text-2xl font-display font-bold text-black uppercase">Magic</div>
                         <DotMatrixText>LINK_DEPLOYER</DotMatrixText>
                       </div>
                     </button>
@@ -572,8 +576,8 @@ export default function OwnerHub() {
               </div>
 
               {/* Capture Bar */}
-              <div className="bg-white/5 rounded-full p-2 flex items-center gap-2 mb-8 border border-white/5">
-                <button onClick={handleCapture} className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white hover:scale-105 transition-all">
+              <div className="bg-white/10 rounded-full p-2 flex items-center gap-2 mb-8 border border-white/5">
+                <button onClick={handleCapture} className="w-12 h-12 bg-nothing-yellow rounded-full flex items-center justify-center text-black hover:scale-105 transition-all">
                   <Mic size={20} />
                 </button>
                 <input 
@@ -581,7 +585,7 @@ export default function OwnerHub() {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder="CAPTURE_THOUGHT" 
-                  className="flex-1 bg-transparent border-none outline-none text-white font-mono text-xs uppercase tracking-widest placeholder:text-white/10 px-2"
+                  className="flex-1 bg-transparent border-none outline-none text-black font-mono text-xs uppercase tracking-widest placeholder:text-black/10 px-2"
                   onKeyDown={(e) => e.key === 'Enter' && handleCapture()}
                 />
               </div>
@@ -597,10 +601,10 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">METABOLISM</DotMatrixText>
+                <DotMatrixText color="text-black">METABOLISM</DotMatrixText>
                 <div className="w-10" />
               </div>
 
@@ -619,7 +623,7 @@ export default function OwnerHub() {
                     ))}
                   </AnimatePresence>
                 ) : (
-                  <div className="h-full flex flex-col items-center justify-center text-white/10">
+                  <div className="h-full flex flex-col items-center justify-center text-black/10">
                     <Check size={64} className="mb-4" />
                     <DotMatrixText>CLEAR</DotMatrixText>
                   </div>
@@ -637,23 +641,23 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">CONSENSUS_HUB</DotMatrixText>
+                <DotMatrixText color="text-black">CONSENSUS_HUB</DotMatrixText>
                 <div className="w-10" />
               </div>
 
               <div className="space-y-4 overflow-y-auto hide-scrollbar pb-12">
-                <div className="bg-white/5 rounded-[2rem] p-8 border border-white/5">
+                <div className="bg-white/10 rounded-[2rem] p-8 border border-white/5">
                   <div className="flex justify-between items-center mb-6">
                     <div>
-                      <h3 className="font-display font-bold text-white">Identity Anchor</h3>
-                      <DotMatrixText color={isEditingAnchor ? "text-red-600" : "text-white/40"}>{isEditingAnchor ? "EDITING" : "LOCKED"}</DotMatrixText>
+                      <h3 className="font-display font-bold text-black">Identity Anchor</h3>
+                      <DotMatrixText color={isEditingAnchor ? "text-nothing-yellow" : "text-black/60"}>{isEditingAnchor ? "EDITING" : "LOCKED"}</DotMatrixText>
                     </div>
                     <button 
                       onClick={() => setIsEditingAnchor(!isEditingAnchor)}
-                      className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40 hover:text-white transition-colors"
+                      className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60 hover:text-black transition-colors"
                     >
                       {isEditingAnchor ? <Check size={16} /> : <Settings size={16} />}
                     </button>
@@ -662,24 +666,24 @@ export default function OwnerHub() {
                     <textarea 
                       value={identityAnchor}
                       onChange={(e) => setIdentityAnchor(e.target.value)}
-                      className="w-full bg-black/20 border border-white/10 rounded-2xl p-4 text-white text-sm leading-relaxed mb-6 outline-none focus:border-red-600 transition-all resize-none h-32"
+                      className="w-full bg-black/20 border border-white/10 rounded-2xl p-4 text-black text-sm leading-relaxed mb-6 outline-none focus:border-nothing-yellow transition-all resize-none h-32"
                     />
                   ) : (
-                    <p className="text-white/60 text-sm leading-relaxed mb-6">
+                    <p className="text-black/60 text-sm leading-relaxed mb-6">
                       "{identityAnchor}"
                     </p>
                   )}
-                  <button className="w-full py-3 bg-white/5 rounded-full text-[10px] font-mono uppercase tracking-widest text-white/40 hover:bg-white/10 transition-all">
+                  <button className="w-full py-3 bg-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-black/60 hover:bg-white/10 transition-all">
                     Request Refactor
                   </button>
                 </div>
 
-                <div className="bg-white/5 rounded-[2rem] p-8 border border-white/5">
+                <div className="bg-white/10 rounded-[2rem] p-8 border border-white/5">
                   <div className="flex justify-between items-center mb-6">
                     <DotMatrixText>ACTIVE_PILLARS</DotMatrixText>
                     <button 
                       onClick={() => setIsAddingSignal(!isAddingSignal)}
-                      className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/40 hover:text-white"
+                      className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-black/60 hover:text-black"
                     >
                       {isAddingSignal ? <X size={14} /> : <Plus size={14} />}
                     </button>
@@ -699,12 +703,12 @@ export default function OwnerHub() {
                             value={newSignalLabel}
                             onChange={(e) => setNewSignalLabel(e.target.value)}
                             placeholder="NEW_SIGNAL_LABEL"
-                            className="flex-1 bg-black/20 border border-white/10 rounded-full px-4 py-2 text-white text-[10px] font-mono outline-none focus:border-red-600 transition-all"
+                            className="flex-1 bg-black/20 border border-white/10 rounded-full px-4 py-2 text-black text-[10px] font-mono outline-none focus:border-nothing-yellow transition-all"
                             onKeyDown={(e) => e.key === 'Enter' && handleAddSignal()}
                           />
                           <button 
                             onClick={handleAddSignal}
-                            className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center text-white"
+                            className="w-10 h-10 bg-nothing-yellow rounded-full flex items-center justify-center text-black"
                           >
                             <Check size={16} />
                           </button>
@@ -715,28 +719,28 @@ export default function OwnerHub() {
 
                   <div className="space-y-4">
                     {signals.map(s => (
-                      <div key={s.id} className="bg-white/5 rounded-[1.5rem] p-4 border border-white/5 space-y-3">
+                      <div key={s.id} className="bg-white/10 rounded-[1.5rem] p-4 border border-white/5 space-y-3">
                         <div className="flex justify-between items-center">
-                          <span className="text-white font-display font-bold text-sm uppercase tracking-tight">{s.label}</span>
+                          <span className="text-black font-display font-bold text-sm uppercase tracking-tight">{s.label}</span>
                           <div className="flex items-center gap-2">
-                            <span className="text-[8px] font-mono text-white/20 uppercase">{s.evidenceCount || 0} PROOFS</span>
-                            <Check size={12} className="text-red-600" />
+                            <span className="text-[8px] font-mono text-black/50 uppercase">{s.evidenceCount || 0} PROOFS</span>
+                            <Check size={12} className="text-nothing-yellow" />
                           </div>
                         </div>
-                        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
                           <motion.div 
                             initial={{ width: 0 }}
                             animate={{ width: `${(s.strength || 0) * 100}%` }}
-                            className="h-full bg-red-600"
+                            className="h-full bg-nothing-yellow"
                           />
                         </div>
                         <div className="flex justify-between items-center">
                           <div className="flex gap-1">
                             {s.tags.map(tag => (
-                              <span key={tag} className="text-[6px] font-mono text-white/20 uppercase border border-white/10 px-1 rounded-sm">{tag}</span>
+                              <span key={tag} className="text-[6px] font-mono text-black/50 uppercase border border-white/10 px-1 rounded-sm">{tag}</span>
                             ))}
                           </div>
-                          <span className="text-[6px] font-mono text-white/20 uppercase">STRENGTH: {Math.round((s.strength || 0) * 100)}%</span>
+                          <span className="text-[6px] font-mono text-black/50 uppercase">STRENGTH: {Math.round((s.strength || 0) * 100)}%</span>
                         </div>
                       </div>
                     ))}
@@ -755,14 +759,14 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">SOCRATIC_INBOX</DotMatrixText>
+                <DotMatrixText color="text-black">SOCRATIC_INBOX</DotMatrixText>
                 <button 
                   onClick={() => runDriftAnalysis()} 
                   disabled={isBrainThinking}
-                  className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40 hover:text-white transition-colors disabled:opacity-50"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60 hover:text-black transition-colors disabled:opacity-50"
                 >
                   <RefreshCw size={16} className={cn(isBrainThinking && "animate-spin")} />
                 </button>
@@ -772,25 +776,25 @@ export default function OwnerHub() {
                 {brainMessages.map((msg, idx) => (
                   <div key={idx} className={cn(
                     "rounded-[2rem] p-6 border",
-                    msg.role === 'model' ? "bg-white/5 border-white/5" : "bg-red-600/10 border-red-600/20 ml-12"
+                    msg.role === 'model' ? "bg-white/10 border-white/5" : "bg-nothing-yellow/10 border-nothing-yellow/20 ml-12"
                   )}>
-                    <DotMatrixText color={msg.role === 'model' ? "text-red-600" : "text-white/40"} className="mb-2">
+                    <DotMatrixText color={msg.role === 'model' ? "text-nothing-yellow" : "text-black/60"} className="mb-2">
                       {msg.role === 'model' ? "BRAIN_PROMPT" : "OWNER_INPUT"}
                     </DotMatrixText>
-                    <p className="text-white text-sm leading-relaxed">
+                    <p className="text-black text-sm leading-relaxed">
                       "{msg.content}"
                     </p>
                     {msg.role === 'model' && idx === brainMessages.length - 1 && (
                       <div className="flex gap-2 mt-6">
-                        <button className="flex-1 py-3 bg-red-600 rounded-full text-[10px] font-mono uppercase tracking-widest text-white">Acknowledge</button>
-                        <button className="flex-1 py-3 bg-white/5 rounded-full text-[10px] font-mono uppercase tracking-widest text-white/40">Defend Logic</button>
+                        <button className="flex-1 py-3 bg-nothing-yellow rounded-full text-[10px] font-mono uppercase tracking-widest text-black">Acknowledge</button>
+                        <button className="flex-1 py-3 bg-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-black/60">Defend Logic</button>
                       </div>
                     )}
                   </div>
                 ))}
                 {isBrainThinking && (
                   <div className="flex justify-center py-4">
-                    <div className="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-nothing-yellow border-t-transparent rounded-full animate-spin" />
                   </div>
                 )}
               </div>
@@ -806,10 +810,10 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">TELEMETRY_CENTER</DotMatrixText>
+                <DotMatrixText color="text-black">TELEMETRY_CENTER</DotMatrixText>
                 <div className="w-10" />
               </div>
 
@@ -828,10 +832,10 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">VENTURE_VAULT</DotMatrixText>
+                <DotMatrixText color="text-black">VENTURE_VAULT</DotMatrixText>
                 <div className="w-10" />
               </div>
 
@@ -850,10 +854,10 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">STRATEGIC_SPARKS</DotMatrixText>
+                <DotMatrixText color="text-black">STRATEGIC_SPARKS</DotMatrixText>
                 <div className="w-10" />
               </div>
 
@@ -879,10 +883,10 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">SYNC_CENTER</DotMatrixText>
+                <DotMatrixText color="text-black">SYNC_CENTER</DotMatrixText>
                 <div className="w-10" />
               </div>
 
@@ -901,10 +905,10 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">MARKET_INTELLIGENCE</DotMatrixText>
+                <DotMatrixText color="text-black">MARKET_INTELLIGENCE</DotMatrixText>
                 <div className="w-10" />
               </div>
 
@@ -923,10 +927,10 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">NEURAL_TRACES</DotMatrixText>
+                <DotMatrixText color="text-black">NEURAL_TRACES</DotMatrixText>
                 <div className="w-10" />
               </div>
 
@@ -945,18 +949,18 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">SPIRIT_DUMP</DotMatrixText>
+                <DotMatrixText color="text-black">SPIRIT_DUMP</DotMatrixText>
                 <div className="w-10" />
               </div>
               <div className="flex-1 flex flex-col gap-6">
                 <textarea 
                   placeholder="Paste long-form philosophy or career manifestos here..."
-                  className="flex-1 bg-white/5 border border-white/10 rounded-[2rem] p-8 text-white text-sm leading-relaxed outline-none focus:border-red-600 transition-all resize-none font-light"
+                  className="flex-1 bg-white/10 border border-white/10 rounded-[2rem] p-8 text-black text-sm leading-relaxed outline-none focus:border-nothing-yellow transition-all resize-none font-light"
                 />
-                <button className="w-full py-6 bg-red-600 rounded-full text-[10px] font-mono uppercase tracking-widest text-white font-bold">
+                <button className="w-full py-6 bg-nothing-yellow rounded-full text-[10px] font-mono uppercase tracking-widest text-black font-bold">
                   INITIATE_METABOLISM
                 </button>
               </div>
@@ -972,23 +976,23 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">DAILY_BRIEFING</DotMatrixText>
+                <DotMatrixText color="text-black">DAILY_BRIEFING</DotMatrixText>
                 <div className="w-10" />
               </div>
               <div className="flex-1 overflow-y-auto hide-scrollbar space-y-4 pb-12">
                 <CognitiveHeatmap />
-                <div className="bg-white/5 rounded-[2rem] p-6 border border-white/5">
-                  <DotMatrixText color="text-red-600" className="mb-2">PULSE_STATS</DotMatrixText>
-                  <div className="text-2xl font-display font-bold text-white">42% COGNITIVE_LOAD</div>
-                  <p className="text-[10px] font-mono text-white/40 uppercase mt-2">Stable // 12 Signals Verified</p>
+                <div className="bg-white/10 rounded-[2rem] p-6 border border-white/5">
+                  <DotMatrixText color="text-nothing-yellow" className="mb-2">PULSE_STATS</DotMatrixText>
+                  <div className="text-2xl font-display font-bold text-black">42% COGNITIVE_LOAD</div>
+                  <p className="text-[10px] font-mono text-black/60 uppercase mt-2">Stable // 12 Signals Verified</p>
                 </div>
-                <div className="bg-white/5 rounded-[2rem] p-6 border border-white/5">
-                  <DotMatrixText color="text-red-600" className="mb-2">LEAD_SCORE</DotMatrixText>
-                  <div className="text-2xl font-display font-bold text-white">3 TIER-1 MATCHES</div>
-                  <p className="text-[10px] font-mono text-white/40 uppercase mt-2">Scout found high-alignment ventures</p>
+                <div className="bg-white/10 rounded-[2rem] p-6 border border-white/5">
+                  <DotMatrixText color="text-nothing-yellow" className="mb-2">LEAD_SCORE</DotMatrixText>
+                  <div className="text-2xl font-display font-bold text-black">3 TIER-1 MATCHES</div>
+                  <p className="text-[10px] font-mono text-black/60 uppercase mt-2">Scout found high-alignment ventures</p>
                 </div>
               </div>
             </motion.div>
@@ -1003,37 +1007,37 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">TEMPTATION_ANALYZER</DotMatrixText>
+                <DotMatrixText color="text-black">TEMPTATION_ANALYZER</DotMatrixText>
                 <div className="w-10" />
               </div>
               
               <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto hide-scrollbar pb-12">
                 {/* LEFT: THE LURE */}
-                <div className="bg-white/5 rounded-[2.5rem] p-8 border border-white/5 flex flex-col">
+                <div className="bg-white/10 rounded-[2.5rem] p-8 border border-white/5 flex flex-col">
                   <div className="flex justify-between items-start mb-8">
-                    <DotMatrixText color="text-red-600">THE_LURE</DotMatrixText>
-                    <span className="text-[10px] font-mono text-white/20 uppercase tracking-widest">EXTERNAL_SIGNAL</span>
+                    <DotMatrixText color="text-nothing-yellow">THE_LURE</DotMatrixText>
+                    <span className="text-[10px] font-mono text-black/50 uppercase tracking-widest">EXTERNAL_SIGNAL</span>
                   </div>
                   
                   <div className="flex-1 space-y-8">
                     <div>
-                      <h3 className="text-3xl font-display font-bold text-white leading-tight">Staff Engineer @ Legacy Corp</h3>
-                      <p className="text-red-600 font-mono text-sm mt-2 font-bold">$250k + Equity // Remote</p>
+                      <h3 className="text-3xl font-display font-bold text-black leading-tight">Staff Engineer @ Legacy Corp</h3>
+                      <p className="text-nothing-yellow font-mono text-sm mt-2 font-bold">$250k + Equity // Remote</p>
                     </div>
                     
                     <div className="space-y-4">
-                      <div className="flex items-center gap-3 text-white/40">
+                      <div className="flex items-center gap-3 text-black/60">
                         <Database size={14} />
                         <span className="text-[10px] font-mono uppercase">Stack: Java, Oracle, Jenkins</span>
                       </div>
-                      <div className="flex items-center gap-3 text-white/40">
+                      <div className="flex items-center gap-3 text-black/60">
                         <Layers size={14} />
                         <span className="text-[10px] font-mono uppercase">Focus: 80% Maintenance</span>
                       </div>
-                      <div className="flex items-center gap-3 text-white/40">
+                      <div className="flex items-center gap-3 text-black/60">
                         <Zap size={14} />
                         <span className="text-[10px] font-mono uppercase">Impact: Internal Tooling</span>
                       </div>
@@ -1041,64 +1045,64 @@ export default function OwnerHub() {
                   </div>
                   
                   <div className="pt-8 border-t border-white/5 mt-auto">
-                    <button className="w-full py-4 border border-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-white/40 hover:bg-white/5 transition-all">
+                    <button className="w-full py-4 border border-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-black/60 hover:bg-white/10 transition-all">
                       VIEW_FULL_JD
                     </button>
                   </div>
                 </div>
 
                 {/* RIGHT: SPIRIT DECAY */}
-                <div className="bg-red-600/5 rounded-[2.5rem] p-8 border border-red-600/10 flex flex-col relative overflow-hidden">
+                <div className="bg-nothing-yellow/5 rounded-[2.5rem] p-8 border border-nothing-yellow/10 flex flex-col relative overflow-hidden">
                   <div className="absolute inset-0 nothing-dot-grid opacity-5 pointer-events-none" />
                   
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="flex justify-between items-center mb-8">
-                      <DotMatrixText color="text-red-600">SPIRIT_DECAY</DotMatrixText>
+                      <DotMatrixText color="text-nothing-yellow">SPIRIT_DECAY</DotMatrixText>
                       <div className="flex items-center gap-2">
-                        <Shield size={14} className="text-red-600" />
-                        <span className="text-red-600 font-mono text-xs font-bold">CRITICAL_RISK</span>
+                        <Shield size={14} className="text-nothing-yellow" />
+                        <span className="text-nothing-yellow font-mono text-xs font-bold">CRITICAL_RISK</span>
                       </div>
                     </div>
                     
                     <div className="flex-1 flex flex-col justify-center">
                       <div className="text-center mb-8">
-                        <div className="text-7xl font-display font-bold text-red-600 mb-2">85%</div>
-                        <p className="text-[10px] font-mono text-red-600/60 uppercase tracking-[0.2em]">Cognitive Debt Projection</p>
+                        <div className="text-7xl font-display font-bold text-nothing-yellow mb-2">85%</div>
+                        <p className="text-[10px] font-mono text-nothing-yellow/60 uppercase tracking-[0.2em]">Cognitive Debt Projection</p>
                       </div>
                       
                       <div className="space-y-6">
                         <div className="space-y-2">
-                          <div className="flex justify-between text-[10px] font-mono uppercase text-white/40">
+                          <div className="flex justify-between text-[10px] font-mono uppercase text-black/60">
                             <span>Pillar Alignment</span>
                             <span>12%</span>
                           </div>
-                          <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                          <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
                             <motion.div 
                               initial={{ width: 0 }}
                               animate={{ width: '12%' }}
-                              className="h-full bg-red-600" 
+                              className="h-full bg-nothing-yellow" 
                             />
                           </div>
                         </div>
                         
                         <div className="space-y-2">
-                          <div className="flex justify-between text-[10px] font-mono uppercase text-white/40">
+                          <div className="flex justify-between text-[10px] font-mono uppercase text-black/60">
                             <span>Autonomy Loss</span>
                             <span>92%</span>
                           </div>
-                          <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                          <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
                             <motion.div 
                               initial={{ width: 0 }}
                               animate={{ width: '92%' }}
-                              className="h-full bg-red-600" 
+                              className="h-full bg-nothing-yellow" 
                             />
                           </div>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="pt-8 border-t border-red-600/10 mt-auto">
-                      <p className="text-[11px] text-red-600/80 leading-relaxed italic">
+                    <div className="pt-8 border-t border-nothing-yellow/10 mt-auto">
+                      <p className="text-[11px] text-nothing-yellow/80 leading-relaxed italic">
                         "This role is a strategic trap. It optimizes for short-term capital while eroding the 'Anti-Rework' and 'Systems Thinking' nodes. Accepting this will reset your Spirit Growth by 14 months."
                       </p>
                     </div>
@@ -1107,10 +1111,10 @@ export default function OwnerHub() {
               </div>
               
               <div className="pt-6 flex gap-4">
-                <button className="flex-1 py-6 bg-white/5 border border-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-white/60 hover:bg-white/10 transition-all">
+                <button className="flex-1 py-6 bg-white/10 border border-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-black/60 hover:bg-white/10 transition-all">
                   DISMISS_TEMPTATION
                 </button>
-                <button className="flex-1 py-6 bg-red-600 rounded-full text-[10px] font-mono uppercase tracking-widest text-white font-bold shadow-lg shadow-red-600/20">
+                <button className="flex-1 py-6 bg-nothing-yellow rounded-full text-[10px] font-mono uppercase tracking-widest text-black font-bold shadow-lg shadow-nothing-yellow/20">
                   NEGOTIATE_SPIRIT_TERMS
                 </button>
               </div>
@@ -1126,24 +1130,24 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">MAGIC_LINK_DEPLOYER</DotMatrixText>
+                <DotMatrixText color="text-black">MAGIC_LINK_DEPLOYER</DotMatrixText>
                 <div className="w-10" />
               </div>
               <div className="space-y-6">
-                <div className="bg-white/5 rounded-[2rem] p-6 border border-white/5">
-                  <DotMatrixText color="text-red-600" className="mb-4">PERSONA_TOGGLE</DotMatrixText>
+                <div className="bg-white/10 rounded-[2rem] p-6 border border-white/5">
+                  <DotMatrixText color="text-nothing-yellow" className="mb-4">PERSONA_TOGGLE</DotMatrixText>
                   <div className="flex gap-2">
                     {['ARCHITECT', 'FOUNDER', 'COACH'].map(p => (
-                      <button key={p} className="flex-1 py-3 bg-white/5 rounded-full text-[8px] font-mono uppercase tracking-widest text-white/40 hover:text-white hover:bg-red-600 transition-all">
+                      <button key={p} className="flex-1 py-3 bg-white/10 rounded-full text-[8px] font-mono uppercase tracking-widest text-black/60 hover:text-black hover:bg-nothing-yellow transition-all">
                         {p}
                       </button>
                     ))}
                   </div>
                 </div>
-                <button className="w-full py-8 bg-red-600 rounded-[2rem] text-xl font-display font-bold uppercase tracking-widest text-white shadow-[0_0_50px_rgba(220,38,38,0.2)]">
+                <button className="w-full py-8 bg-nothing-yellow rounded-[2rem] text-xl font-display font-bold uppercase tracking-widest text-black shadow-[0_0_50px_rgba(220,38,38,0.2)]">
                   GENERATE_LINK
                 </button>
               </div>
@@ -1159,64 +1163,64 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-white">SENSOR_HEALTH</DotMatrixText>
-                <button onClick={() => setActiveView('media')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <DotMatrixText color="text-black">SENSOR_HEALTH</DotMatrixText>
+                <button onClick={() => setActiveView('media')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-black/60">
                   <Layers size={16} />
                 </button>
               </div>
               <div className="space-y-4">
-                <div className="bg-white/5 rounded-[2rem] p-6 border border-white/5 mb-4">
-                  <div className="bg-white/5 rounded-[2rem] p-6 border border-white/5 mb-4">
+                <div className="bg-white/10 rounded-[2rem] p-6 border border-white/5 mb-4">
+                  <div className="bg-white/10 rounded-[2rem] p-6 border border-white/5 mb-4">
                   <div className="flex justify-between items-center mb-4">
-                    <DotMatrixText color="text-red-600">SPIRIT_DECAY_GAUGE</DotMatrixText>
-                    <span className="text-[10px] font-mono text-red-600 font-bold">{spiritDecay}%</span>
+                    <DotMatrixText color="text-nothing-yellow">SPIRIT_DECAY_GAUGE</DotMatrixText>
+                    <span className="text-[10px] font-mono text-nothing-yellow font-bold">{spiritDecay}%</span>
                   </div>
                   <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: `${spiritDecay}%` }}
-                      className="h-full bg-red-600"
+                      className="h-full bg-nothing-yellow"
                     />
                   </div>
-                  <p className="text-[8px] font-mono text-white/20 uppercase mt-4 tracking-widest">
+                  <p className="text-[8px] font-mono text-white/50 uppercase mt-4 tracking-widest">
                     Cognitive debt accumulated through low-leverage decision cycles.
                   </p>
                 </div>
 
-                <DotMatrixText color="text-red-600" className="mb-4">NATIVE_OS_STATUS</DotMatrixText>
+                <DotMatrixText color="text-nothing-yellow" className="mb-4">NATIVE_OS_STATUS</DotMatrixText>
                   <div className="grid grid-cols-3 gap-4">
                     <div className="flex flex-col items-center gap-2">
                       <button 
                         onClick={() => setIsRecording(!isRecording)}
                         className={cn(
                           "w-10 h-10 rounded-full flex items-center justify-center transition-all",
-                          isRecording ? "bg-red-600 text-white animate-pulse" : "bg-red-600/10 text-red-600"
+                          isRecording ? "bg-nothing-yellow text-black animate-pulse" : "bg-nothing-yellow/10 text-nothing-yellow"
                         )}
                       >
                         <Mic size={16} />
                       </button>
-                      <span className="text-[8px] font-mono text-white/40 uppercase">{isRecording ? 'Recording...' : 'Mic_Ready'}</span>
+                      <span className="text-[8px] font-mono text-white/60 uppercase">{isRecording ? 'Recording...' : 'Mic_Ready'}</span>
                     </div>
                     <div className="flex flex-col items-center gap-2">
                       <button 
                         onClick={showCamera ? stopCamera : startCamera}
                         className={cn(
                           "w-10 h-10 rounded-full flex items-center justify-center transition-all",
-                          showCamera ? "bg-red-600 text-white" : "bg-red-600/10 text-red-600"
+                          showCamera ? "bg-nothing-yellow text-black" : "bg-nothing-yellow/10 text-nothing-yellow"
                         )}
                       >
                         <Activity size={16} />
                       </button>
-                      <span className="text-[8px] font-mono text-white/40 uppercase">{showCamera ? 'Cam_Active' : 'Cam_Ready'}</span>
+                      <span className="text-[8px] font-mono text-white/60 uppercase">{showCamera ? 'Cam_Active' : 'Cam_Ready'}</span>
                     </div>
                     <div className="flex flex-col items-center gap-2">
-                      <div className="w-10 h-10 rounded-full bg-red-600/10 flex items-center justify-center text-red-600">
+                      <div className="w-10 h-10 rounded-full bg-nothing-yellow/10 flex items-center justify-center text-nothing-yellow">
                         <MapPin size={16} />
                       </div>
-                      <span className="text-[8px] font-mono text-white/40 uppercase">Geo_Ready</span>
+                      <span className="text-[8px] font-mono text-white/60 uppercase">Geo_Ready</span>
                     </div>
                   </div>
                 </div>
@@ -1225,7 +1229,7 @@ export default function OwnerHub() {
                   <div className="bg-black rounded-[2rem] overflow-hidden aspect-video relative border border-white/10 mb-4">
                     <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover" />
                     <div className="absolute top-4 left-4">
-                      <DotMatrixText color="text-red-600">LIVE_FEED</DotMatrixText>
+                      <DotMatrixText color="text-nothing-yellow">LIVE_FEED</DotMatrixText>
                     </div>
                     <button 
                       onClick={stopCamera}
@@ -1237,17 +1241,17 @@ export default function OwnerHub() {
                 )}
 
                 {[
-                  { label: 'GITHUB_WEBHOOK', status: 'ACTIVE', color: 'text-red-600' },
-                  { label: 'SUBSTACK_RSS', status: 'ACTIVE', color: 'text-red-600' },
-                  { label: 'VOICE_PULSE', status: 'STABLE', color: 'text-white/40' },
-                  { label: 'NEURAL_LINK', status: 'ERROR', color: 'text-red-600 animate-pulse' }
+                  { label: 'GITHUB_WEBHOOK', status: 'ACTIVE', color: 'text-nothing-yellow' },
+                  { label: 'SUBSTACK_RSS', status: 'ACTIVE', color: 'text-nothing-yellow' },
+                  { label: 'VOICE_PULSE', status: 'STABLE', color: 'text-white/60' },
+                  { label: 'NEURAL_LINK', status: 'ERROR', color: 'text-nothing-yellow animate-pulse' }
                 ].map(s => (
-                  <div key={s.label} className="bg-white/5 rounded-[1.5rem] p-6 border border-white/5 flex justify-between items-center">
+                  <div key={s.label} className="bg-white/10 rounded-[1.5rem] p-6 border border-white/5 flex justify-between items-center">
                     <span className="text-[10px] font-mono text-white/60 uppercase tracking-widest">{s.label}</span>
                     <span className={cn("text-[10px] font-mono uppercase tracking-widest font-bold", s.color)}>{s.status}</span>
                   </div>
                 ))}
-                <button className="w-full py-4 bg-white/5 rounded-full text-[10px] font-mono uppercase tracking-widest text-white/40 mt-8 border border-white/10">
+                <button className="w-full py-4 bg-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-white/60 mt-8 border border-white/10">
                   RESTART_PIPELINE
                 </button>
               </div>
@@ -1263,7 +1267,7 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('telemetry')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('telemetry')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
                 <DotMatrixText color="text-white">MEDIA_VAULT</DotMatrixText>
@@ -1280,7 +1284,7 @@ export default function OwnerHub() {
                     { type: 'VIDEO', url: 'https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-circuit-board-14052-large.mp4', label: 'NEURAL_NET' },
                     { type: 'IMAGE', url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=400&q=80', label: 'GLOBAL_SYNC' },
                   ].map((item, idx) => (
-                    <div key={idx} className="group relative aspect-square bg-white/5 rounded-[2rem] overflow-hidden border border-white/5">
+                    <div key={idx} className="group relative aspect-square bg-white/10 rounded-[2rem] overflow-hidden border border-white/5">
                       {item.type === 'IMAGE' ? (
                         <img src={item.url} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" referrerPolicy="no-referrer" />
                       ) : (
@@ -1288,7 +1292,7 @@ export default function OwnerHub() {
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                       <div className="absolute bottom-4 left-4 right-4">
-                        <span className="text-[8px] font-mono text-white uppercase tracking-widest bg-red-600 px-2 py-1 rounded-sm">
+                        <span className="text-[8px] font-mono text-black uppercase tracking-widest bg-nothing-yellow px-2 py-1 rounded-sm">
                           {item.label}
                         </span>
                       </div>
@@ -1308,10 +1312,10 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col bg-[#050505] z-[60]"
             >
               <div className="flex justify-between items-center p-8 pt-20">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
-                <DotMatrixText color="text-red-600">MANUAL_PARSER</DotMatrixText>
+                <DotMatrixText color="text-nothing-yellow">MANUAL_PARSER</DotMatrixText>
                 <div className="w-10" />
               </div>
               <div className="flex-1 overflow-hidden">
@@ -1329,7 +1333,7 @@ export default function OwnerHub() {
               className="absolute inset-0 flex flex-col p-8 pt-20"
             >
               <div className="flex justify-between items-center mb-12">
-                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+                <button onClick={() => setActiveView('lockscreen')} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60">
                   <ChevronRight size={16} className="rotate-180" />
                 </button>
                 <DotMatrixText color="text-white">FOCUS_LAYERS</DotMatrixText>
@@ -1364,7 +1368,7 @@ export default function OwnerHub() {
 
                 <div className="pt-8">
                   <DotMatrixText className="mb-4">SYSTEM_MODE</DotMatrixText>
-                  <div className="bg-white/5 rounded-[2rem] p-6 flex justify-between items-center border border-white/5">
+                  <div className="bg-white/10 rounded-[2rem] p-6 flex justify-between items-center border border-white/5">
                     <span className="font-display font-bold text-white">DEEP_LOGIC</span>
                     <NothingToggle 
                       active={state.mode === 'DEEP_LOGIC'} 
@@ -1384,7 +1388,7 @@ export default function OwnerHub() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="absolute inset-x-6 bottom-32 z-[100] bg-red-600 rounded-[2rem] p-6 shadow-2xl nothing-red-glow"
+              className="absolute inset-x-6 bottom-32 z-[100] bg-nothing-yellow rounded-[2rem] p-6 shadow-2xl nothing-yellow-glow"
             >
               <div className="flex justify-between items-start mb-4">
                 <DotMatrixText color="text-white">DRIFT_ALERT // {driftAlert.severity}</DotMatrixText>
@@ -1426,7 +1430,7 @@ export default function OwnerHub() {
               className="absolute inset-x-0 bottom-0 h-[80%] bg-[#111] rounded-t-[3rem] p-8 z-[60] flex flex-col shadow-[0_-20px_50px_rgba(0,0,0,0.5)]"
             >
               <div className="w-12 h-1 bg-white/10 rounded-full mx-auto mb-8" />
-              <DotMatrixText color="text-red-600" className="mb-8">LINK_REQUIRED</DotMatrixText>
+              <DotMatrixText color="text-nothing-yellow" className="mb-8">LINK_REQUIRED</DotMatrixText>
               
               <div className="flex-1 overflow-y-auto space-y-8 hide-scrollbar">
                 <div>
@@ -1438,7 +1442,7 @@ export default function OwnerHub() {
                         onClick={() => toggleLink(p)}
                         className={cn(
                           "px-4 py-2 rounded-full text-xs font-bold border transition-all",
-                          selectedLinks.includes(p) ? "bg-white text-black border-white" : "bg-white/5 text-white/40 border-white/5"
+                          selectedLinks.includes(p) ? "bg-white text-black border-white" : "bg-white/10 text-white/60 border-white/5"
                         )}
                       >
                         {p}
@@ -1455,7 +1459,7 @@ export default function OwnerHub() {
                         onClick={() => toggleLink(s)}
                         className={cn(
                           "px-4 py-2 rounded-full text-xs font-bold border transition-all",
-                          selectedLinks.includes(s) ? "bg-white text-black border-white" : "bg-white/5 text-white/40 border-white/5"
+                          selectedLinks.includes(s) ? "bg-white text-black border-white" : "bg-white/10 text-white/60 border-white/5"
                         )}
                       >
                         {s}
@@ -1468,7 +1472,7 @@ export default function OwnerHub() {
               <button 
                 onClick={handleConfirmLink}
                 disabled={selectedLinks.length === 0}
-                className="w-full py-5 bg-red-600 text-white font-bold uppercase tracking-widest text-[10px] rounded-full mt-8 disabled:opacity-20 transition-all"
+                className="w-full py-5 bg-nothing-yellow text-black font-bold uppercase tracking-widest text-[10px] rounded-full mt-8 disabled:opacity-20 transition-all"
               >
                 Confirm Evolution
               </button>
