@@ -249,8 +249,8 @@ export const MOCK_EXPERIENCE_MATRIX = [
     industry: ['Fintech'],
     legacy_lessons: 'Built this in 2023. Shows why rigid systems eventually break under velocity. The logic remains core for LLM orchestrations today.',
     logic_applied: 'Decentralized state verification',
-    content_markdown: '# The Fintech Pivot
-When the ledger failed...'
+    content_markdown: `# The Fintech Pivot
+When the ledger failed...`
   },
   {
     id: 'e2',
@@ -259,8 +259,8 @@ When the ledger failed...'
     industry: ['F&B', 'Logistics'],
     legacy_lessons: 'We survived a 40% supply chain drop not by shouting louder, but by rewiring the incentive loop.',
     logic_applied: 'Temporary Circuit Breaker & Decentralized Incentives',
-    content_markdown: '# The Death Spiral
-Stopping orders to save the brand.'
+    content_markdown: `# The Death Spiral
+Stopping orders to save the brand.`
   }
 ];
 
@@ -270,7 +270,7 @@ Stopping orders to save the brand.'
 // ============================================================================
 
 export const MOCK_TESTIMONIALS = [
-  { id: 't1', persona: 'Architect', text: 'Vedanshu rebuilt our decentralized routing logic overnight. He doesn't write code; he writes structural inevitabilities.', author: 'CTO, Fintech Corp' },
+  { id: 't1', persona: 'Architect', text: "Vedanshu rebuilt our decentralized routing logic overnight. He doesn't write code; he writes structural inevitabilities.", author: 'CTO, Fintech Corp' },
   { id: 't2', persona: 'Founder', text: 'The pivot mapped out cut our burn rate by 40%. Direct, ROI-focused operations without the agency fluff.', author: 'CEO, Kitchen X' },
   { id: 't3', persona: 'Coach', text: 'He has an empathetic grip on systemic anxiety. The session cleared my mental stack immediately.', author: 'Series A Founder' }
 ];
