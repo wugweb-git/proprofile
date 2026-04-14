@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 
 let aiInstance: GoogleGenAI | null = null;
 
-const getAI = () => {
+export const getAI = () => {
   if (aiInstance) return aiInstance;
   
   // Safely check for the key. Vite's 'define' replaces this at build time,
@@ -123,6 +123,7 @@ export const performSimulatedAudit = async (input: string, proofs: any[]) => {
     }
   `;
 
+  const ai = getAI();
   const response = await ai.models.generateContent({
     model,
     contents: [{ parts: [{ text: input }] }],
@@ -161,6 +162,7 @@ export const analyzeMemorySaturation = async (nodes: any[], currentVector: strin
     }
   `;
 
+  const ai = getAI();
   const response = await ai.models.generateContent({
     model,
     contents: [{ parts: [{ text: "Analyze memory saturation for drift." }] }],
