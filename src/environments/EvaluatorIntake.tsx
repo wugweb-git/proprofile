@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ShieldCheck, Zap, Cpu, AlertCircle, ArrowRight } from 'lucide-react';
-import { GoogleGenAI } from "@google/genai";
+import { getAI } from '../services/geminiService';
 import { cn } from '../lib/utils';
 import { MOCK_IDENTITY, MOCK_SIGNALS } from '../mockData';
 
@@ -24,7 +24,7 @@ export default function EvaluatorIntake() {
     setStep('audit');
     
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+      const ai = getAI();
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
         contents: [{ role: 'user', parts: [{ text: `As an Identity Auditor, evaluate the alignment between this Job Description and the Tenant's Identity Profile.

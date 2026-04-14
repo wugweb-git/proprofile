@@ -1,6 +1,25 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let aiInstance: GoogleGenAI | null = null;
+
+const getAI = () => {
+  if (aiInstance) return aiInstance;
+  
+  // Safely check for the key. Vite's 'define' replaces this at build time,
+  // but we add a fallback to avoid ReferenceErrors during initialization.
+  const apiKey = typeof process !== 'undefined' ? process.env.GEMINI_API_KEY : undefined;
+  
+  if (!apiKey) {
+    console.warn("GEMINI_API_KEY is missing. AI features will be limited.");
+    // We still initialize with an empty string if needed to avoid immediate crashes,
+    // though the API calls themselves will catch the error later.
+    return new GoogleGenAI(""); 
+  }
+  
+  aiInstance = new GoogleGenAI(apiKey);
+  return aiInstance;
+};
+
 
 export interface TemptationAnalysis {
   score: number;
@@ -39,6 +58,7 @@ export const getBrainResponse = async (history: { role: string, content: string 
     parts: [{ text: h.content }]
   }));
 
+  const ai = getAI();
   const response = await ai.models.generateContent({
     model,
     contents,
@@ -66,6 +86,7 @@ export const analyzeTemptation = async (jobDescription: string, pillars: string[
     }
   `;
 
+  const ai = getAI();
   const response = await ai.models.generateContent({
     model,
     contents: [{ parts: [{ text: jobDescription }] }],

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus, ArrowRight, Check, Activity, Zap, Shield, Cpu, ExternalLink, MapPin, Music, X, Lock, TrendingUp, Search, RefreshCw, AlertCircle, GitCommit } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
-import { GoogleGenAI } from "@google/genai";
+import { getAI } from '../services/geminiService';
 import { useStore } from '../store/useStore';
 import { MOCK_PROOFS, MOCK_SIGNALS, MOCK_PATTERNS, MOCK_IDENTITY, MOCK_PULSE, MOCK_CAPABILITIES, MOCK_AUDIO_INSIGHTS } from '../mockData';
 import { VoiceInsightCard } from '../components/VoiceInsightCard';
@@ -297,7 +297,7 @@ export default function PublicProxy() {
     if (!jdInput.trim()) return;
     setIsAuditing(true);
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+      const ai = getAI();
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
         contents: [{ role: 'user', parts: [{ text: `As an Identity Auditor, evaluate the alignment between this Job Description and the Tenant's Identity Profile.

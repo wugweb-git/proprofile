@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, TrendingUp, Cpu, Zap, RefreshCw, AlertCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-import { GoogleGenAI } from "@google/genai";
+import { getAI } from '../services/geminiService';
 
 const DotMatrixText = ({ children, className, color = 'text-white/40' }: { children: React.ReactNode, className?: string, color?: string }) => (
   <span className={cn("nothing-dot-matrix", color, className)}>
@@ -20,7 +20,7 @@ export const MarketIntelligence = ({ mvsMode = 'spirit' }: { mvsMode?: 'capital'
     if (!query.trim()) return;
     setLoading(true);
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+      const ai = getAI();
       const bias = mvsMode === 'capital' 
         ? "Focus on high-velocity ROI, market-rate leverage, and immediate financial opportunities." 
         : "Focus on systemic alignment, philosophical growth, and high-complexity architectural challenges.";
