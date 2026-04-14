@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Shield, Zap, Database, ChevronRight, X, Check, Activity } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { performSimulatedAudit, analyzeTemptation } from '../services/geminiService';
-import { MOCK_PROOFS, MOCK_SIGNALS } from '../mockData';
+import { analyzeTemptation } from '../services/geminiService';
+import { MOCK_SIGNALS } from '../mockData';
 
 import { useStore } from '../store/useStore';
 

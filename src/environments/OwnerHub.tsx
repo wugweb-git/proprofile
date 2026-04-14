@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import { Mic, Settings, X, Check, Activity, Wifi, Battery, Signal as SignalIcon, Share, Clipboard, Plus, Minus, ChevronRight, Sliders, MessageSquare, Database, Layers, Zap, MapPin, RefreshCw, TrendingUp, GitCommit, Shield, Search } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import { GoogleGenAI } from "@google/genai";
+
 import { memoryEngine, MemoryNode } from '../services/memoryEngine';
 import { cn } from '../lib/utils';
 import { useVibe } from '../components/VibeProvider';
@@ -15,7 +15,7 @@ import { MarketIntelligence } from '../components/MarketIntelligence';
 import { NeuralTrace } from '../components/NeuralTrace';
 import { CognitiveHeatmap } from '../components/CognitiveHeatmap';
 import { LogicTraceModal } from '../components/LogicTraceModal';
-import { getBrainResponse, analyzeTemptation, analyzeMemorySaturation } from '../services/geminiService';
+import { getBrainResponse, analyzeTemptation, analyzeMemorySaturation, generateGeminiText, hasGeminiApiKey } from '../services/geminiService';
 import EvaluatorIntake from '../components/EvaluatorIntake';
 import { MOCK_IDENTITY, MOCK_SIGNALS, MOCK_AUDIO_INSIGHTS, MOCK_PROOFS } from '../mockData';
 import { AudioInsight, Signal } from '../types';
@@ -270,25 +270,24 @@ export default function OwnerHub() {
   const handleSynthesize = async (node: MemoryNode) => {
     setIsSynthesizing(true);
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: [{ role: 'user', parts: [{ text: `Synthesize this raw thought into a structured Identity Signal.
-        
-        RAW_THOUGHT:
-        ${node.content}
-        
-        Return a JSON object with:
-        {
-          "label": "Short, punchy label",
-          "content": "Synthesized logic",
-          "tags": ["Tag1", "Tag2"],
-          "strength": 0.85
-        }` }] }],
-        config: { responseMimeType: "application/json" }
-      });
-      
-      const result = JSON.parse(response.text || "{}");
+      if (!hasGeminiApiKey()) {
+        return;
+      }
+
+      const response = await generateGeminiText(`Synthesize this raw thought into a structured Identity Signal.
+
+RAW_THOUGHT:
+${node.content}
+
+Return a JSON object with:
+{
+  "label": "Short, punchy label",
+  "content": "Synthesized logic",
+  "tags": ["Tag1", "Tag2"],
+  "strength": 0.85
+}`);
+
+      const result = JSON.parse(response || "{}");
       if (result.label) {
         const newSignal = {
           id: `sig_${Date.now()}`,

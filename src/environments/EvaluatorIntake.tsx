@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ShieldCheck, Zap, Cpu, AlertCircle, ArrowRight } from 'lucide-react';
-import { GoogleGenAI } from "@google/genai";
+import { generateGeminiText, hasGeminiApiKey } from "../services/geminiService";
 import { cn } from '../lib/utils';
 import { MOCK_IDENTITY, MOCK_SIGNALS } from '../mockData';
 
@@ -24,28 +24,29 @@ export default function EvaluatorIntake() {
     setStep('audit');
     
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: [{ role: 'user', parts: [{ text: `As an Identity Auditor, evaluate the alignment between this Job Description and the Tenant's Identity Profile.
-        
-        TENANT_IDENTITY:
-        Headline: ${MOCK_IDENTITY.headline}
-        Bio: ${MOCK_IDENTITY.bio}
-        Signals: ${MOCK_SIGNALS.map(s => s.label).join(', ')}
-        
-        JOB_DESCRIPTION:
-        ${jdInput}
-        
-        Provide a structured, stark report (Nothing OS 4.0 tone) with these exact sections:
-        1. THE_DIAGNOSIS: (What is their actual problem?)
-        2. THE_PROOF: (3 specific trace-logs or signals that solve this)
-        3. SYSTEMIC_FIT: (Score 0-10.0)
-        
-        If Fit > 8.0, include a [HANDSHAKE_AUTHORIZED] flag.` }] }],
-      } as any);
-      
-      setAuditResult(response.text || "Audit failed to synthesize.");
+      if (!hasGeminiApiKey()) {
+        setAuditResult("NEURAL_LINK_FAILURE: Configure VITE_GEMINI_API_KEY.");
+        return;
+      }
+
+      const response = await generateGeminiText(`As an Identity Auditor, evaluate the alignment between this Job Description and the Tenant's Identity Profile.
+
+TENANT_IDENTITY:
+Headline: ${MOCK_IDENTITY.headline}
+Bio: ${MOCK_IDENTITY.bio}
+Signals: ${MOCK_SIGNALS.map(s => s.label).join(', ')}
+
+JOB_DESCRIPTION:
+${jdInput}
+
+Provide a structured, stark report (Nothing OS 4.0 tone) with these exact sections:
+1. THE_DIAGNOSIS: (What is their actual problem?)
+2. THE_PROOF: (3 specific trace-logs or signals that solve this)
+3. SYSTEMIC_FIT: (Score 0-10.0)
+
+If Fit > 8.0, include a [HANDSHAKE_AUTHORIZED] flag.`);
+
+      setAuditResult(response || "Audit failed to synthesize.");
     } catch (err) {
       console.error(err);
       setAuditResult("NEURAL_LINK_FAILURE: Check API configuration.");

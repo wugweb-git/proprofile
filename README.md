@@ -56,7 +56,7 @@ Use the floating **Testing Dashboard** (Red Settings Icon) to:
    npm install
    ```
 3. Set up your environment variables:
-   Create a `.env` file and add your `GEMINI_API_KEY`.
+   Create a `.env` file from `.env.example` and set `VITE_GEMINI_API_KEY` for the client and `MONGODB_DATA_API_URL`, `MONGODB_DATA_API_KEY`, `MONGODB_DATA_SOURCE`, and `MONGODB_DB` for Vercel serverless API routes.
 4. Start the development server:
    ```bash
    npm run dev
@@ -65,3 +65,29 @@ Use the floating **Testing Dashboard** (Red Settings Icon) to:
 ## 📜 License
 
 MIT License.
+
+
+## ☁️ Vercel + MongoDB deployment
+
+- The app is configured for SPA rewrites via `vercel.json`.
+- Serverless API endpoints:
+  - `GET /api/health` - verifies MongoDB connectivity (`ping`).
+  - `GET /api/memory?limit=25` - fetches latest memory nodes.
+  - `POST /api/memory` - inserts a memory node (`source`, `content`, optional `state` and `tags`).
+- In Vercel Project Settings → Environment Variables, configure:
+  - `VITE_GEMINI_API_KEY`
+  - `MONGODB_DATA_API_URL`
+  - `MONGODB_DATA_API_KEY`
+  - `MONGODB_DATA_SOURCE` (optional, defaults to `Cluster0`)
+  - `MONGODB_DB` (optional, defaults to `proprofile`)
+  - `MONGODB_URI` (optional; used for driver-based deployments)
+
+> Security note: never commit raw database credentials to git; rotate any secret that has been shared in plaintext.
+
+
+Connection-string note: a raw `MONGODB_URI` is for the MongoDB driver. This repository uses Atlas Data API for serverless compatibility, so configure Data API env vars in Vercel.
+
+
+Note on driver-based URI mode: if you prefer `MONGODB_URI`, add a MongoDB Node driver path in API handlers. Current serverless handlers are Data API based for minimal cold-start and dependency footprint.
+
+Function optimization note: Data API requests are sent through a reused keep-alive HTTPS agent in `api/_lib/mongodb.ts` to reduce connection churn across Vercel function invocations.

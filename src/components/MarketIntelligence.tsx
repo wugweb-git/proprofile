@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, TrendingUp, Cpu, Zap, RefreshCw, AlertCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-import { GoogleGenAI } from "@google/genai";
+import { generateGeminiText, hasGeminiApiKey } from "../services/geminiService";
 
 const DotMatrixText = ({ children, className, color = 'text-white/40' }: { children: React.ReactNode, className?: string, color?: string }) => (
   <span className={cn("nothing-dot-matrix", color, className)}>
@@ -20,18 +20,20 @@ export const MarketIntelligence = ({ mvsMode = 'spirit' }: { mvsMode?: 'capital'
     if (!query.trim()) return;
     setLoading(true);
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
-      const bias = mvsMode === 'capital' 
-        ? "Focus on high-velocity ROI, market-rate leverage, and immediate financial opportunities." 
+      if (!hasGeminiApiKey()) {
+        setReport("Gemini API key is missing. Configure VITE_GEMINI_API_KEY.");
+        return;
+      }
+
+      const bias = mvsMode === 'capital'
+        ? "Focus on high-velocity ROI, market-rate leverage, and immediate financial opportunities."
         : "Focus on systemic alignment, philosophical growth, and high-complexity architectural challenges.";
 
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: [{ role: 'user', parts: [{ text: `As a Market Intelligence Agent for a high-level Systems Architect, provide a concise, dot-matrix style report on: ${query}. ${bias} Focus on industry trends, JD overlaps, and competitor movements. Use Nothing OS 4.0 tone (minimal, stark, functional).` }] }],
-        tools: [{ googleSearch: {} }]
-      } as any);
-      
-      setReport(response.text || "No intelligence gathered.");
+      const response = await generateGeminiText(
+        `As a Market Intelligence Agent for a high-level Systems Architect, provide a concise, dot-matrix style report on: ${query}. ${bias} Focus on industry trends, JD overlaps, and competitor movements. Use Nothing OS 4.0 tone (minimal, stark, functional).`
+      );
+
+      setReport(response || "No intelligence gathered.");
     } catch (err) {
       console.error(err);
       setReport("Error accessing neural vectors. Check API configuration.");

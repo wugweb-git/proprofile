@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus, ArrowRight, Check, Activity, Zap, Shield, Cpu, ExternalLink, MapPin, Music, X, Lock, TrendingUp, Search, RefreshCw, AlertCircle, GitCommit } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
-import { GoogleGenAI } from "@google/genai";
+import { generateGeminiText, hasGeminiApiKey } from "../services/geminiService";
 import { useStore } from '../store/useStore';
 import { MOCK_PROOFS, MOCK_SIGNALS, MOCK_PATTERNS, MOCK_IDENTITY, MOCK_PULSE, MOCK_CAPABILITIES, MOCK_AUDIO_INSIGHTS } from '../mockData';
 import { VoiceInsightCard } from '../components/VoiceInsightCard';
@@ -281,27 +281,27 @@ export default function PublicProxy() {
     if (!jdInput.trim()) return;
     setIsAuditing(true);
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: [{ role: 'user', parts: [{ text: `As an Identity Auditor, evaluate the alignment between this Job Description and the Tenant's Identity Profile.
-        
-        TENANT_IDENTITY:
-        Headline: ${MOCK_IDENTITY.headline}
-        Bio: ${MOCK_IDENTITY.bio}
-        Signals: ${MOCK_SIGNALS.map(s => s.label).join(', ')}
-        
-        JOB_DESCRIPTION:
-        ${jdInput}
-        
-        Provide a concise, dot-matrix style report (Nothing OS 4.0 tone) highlighting:
-        1. CRITICAL_OVERLAPS (Where the tenant excels)
-        2. SYSTEMIC_GAPS (Where alignment is weak)
-        3. ALIGNMENT_SCORE (0-100%)` }] }],
-        tools: [{ googleSearch: {} }]
-      } as any);
-      
-      setAuditResult(response.text || "Audit failed to synthesize.");
+      if (!hasGeminiApiKey()) {
+        setAuditResult("NEURAL_LINK_FAILURE: Configure VITE_GEMINI_API_KEY.");
+        return;
+      }
+
+      const response = await generateGeminiText(`As an Identity Auditor, evaluate the alignment between this Job Description and the Tenant's Identity Profile.
+
+TENANT_IDENTITY:
+Headline: ${MOCK_IDENTITY.headline}
+Bio: ${MOCK_IDENTITY.bio}
+Signals: ${MOCK_SIGNALS.map(s => s.label).join(', ')}
+
+JOB_DESCRIPTION:
+${jdInput}
+
+Provide a concise, dot-matrix style report (Nothing OS 4.0 tone) highlighting:
+1. CRITICAL_OVERLAPS (Where the tenant excels)
+2. SYSTEMIC_GAPS (Where alignment is weak)
+3. ALIGNMENT_SCORE (0-100%)`);
+
+      setAuditResult(response || "Audit failed to synthesize.");
     } catch (err) {
       console.error(err);
       setAuditResult("NEURAL_LINK_FAILURE: Check API configuration.");

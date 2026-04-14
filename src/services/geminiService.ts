@@ -1,18 +1,45 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI } from '@google/genai';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const GEMINI_MODEL = 'gemini-3-flash-preview';
+
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+
+const assertGeminiClient = () => {
+  if (!ai) {
+    throw new Error('Gemini API key is missing. Set VITE_GEMINI_API_KEY in your environment.');
+  }
+
+  return ai;
+};
+
+
+
+export const hasGeminiApiKey = () => Boolean(apiKey);
+
+export const generateGeminiText = async (prompt: string, options?: { systemInstruction?: string }) => {
+  const response = await assertGeminiClient().models.generateContent({
+    model: GEMINI_MODEL,
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    config: {
+      systemInstruction: options?.systemInstruction,
+    },
+  });
+
+  return response.text || '';
+};
 
 export interface TemptationAnalysis {
   score: number;
   lure: string;
   cost: string;
   violations: string[];
-  verdict: "REJECT" | "CONSIDER" | "ACCEPT";
+  verdict: 'REJECT' | 'CONSIDER' | 'ACCEPT';
   confidence: number;
 }
 
 export interface AuditResult {
-  verdict: "CRITICAL_FIT" | "PARTIAL_FIT" | "MISALIGNMENT";
+  verdict: 'CRITICAL_FIT' | 'PARTIAL_FIT' | 'MISALIGNMENT';
   alignmentScore: number;
   summary: string;
   risks: string[];
@@ -20,8 +47,7 @@ export interface AuditResult {
   confidence: number;
 }
 
-export const getBrainResponse = async (history: { role: string, content: string }[], currentVector: string) => {
-  const model = "gemini-3-flash-preview";
+export const getBrainResponse = async (history: { role: string; content: string }[], currentVector: string) => {
   const systemInstruction = `
     You are "The Brain," the Socratic alter-ego of a high-end systems engineer.
     Your goal is to identify dissonance between the Owner's actions and their stated "Directional Vector": ${currentVector}.
@@ -34,22 +60,21 @@ export const getBrainResponse = async (history: { role: string, content: string 
     - Do not be a "helpful assistant." Be a critical partner.
   `;
 
-  const contents = history.map(h => ({
+  const contents = history.map((h) => ({
     role: h.role === 'user' ? 'user' : 'model',
-    parts: [{ text: h.content }]
+    parts: [{ text: h.content }],
   }));
 
-  const response = await ai.models.generateContent({
-    model,
+  const response = await assertGeminiClient().models.generateContent({
+    model: GEMINI_MODEL,
     contents,
-    config: { systemInstruction }
+    config: { systemInstruction },
   });
 
   return response.text;
 };
 
 export const analyzeTemptation = async (jobDescription: string, pillars: string[]) => {
-  const model = "gemini-3-flash-preview";
   const systemInstruction = `
     You are the "Spirit Decay Analyzer." 
     Evaluate the provided Job Description against the Owner's core pillars: ${pillars.join(', ')}.
@@ -66,20 +91,19 @@ export const analyzeTemptation = async (jobDescription: string, pillars: string[
     }
   `;
 
-  const response = await ai.models.generateContent({
-    model,
+  const response = await assertGeminiClient().models.generateContent({
+    model: GEMINI_MODEL,
     contents: [{ parts: [{ text: jobDescription }] }],
-    config: { 
+    config: {
       systemInstruction,
-      responseMimeType: "application/json"
-    }
+      responseMimeType: 'application/json',
+    },
   });
 
   return JSON.parse(response.text || '{}');
 };
 
-export const performSimulatedAudit = async (input: string, proofs: any[]) => {
-  const model = "gemini-3-flash-preview";
+export const performSimulatedAudit = async (input: string, proofs: unknown[]) => {
   const systemInstruction = `
     You are the "Systemic Auditor." 
     The user has provided a Job Description or a system failure description.
@@ -102,20 +126,19 @@ export const performSimulatedAudit = async (input: string, proofs: any[]) => {
     }
   `;
 
-  const response = await ai.models.generateContent({
-    model,
+  const response = await assertGeminiClient().models.generateContent({
+    model: GEMINI_MODEL,
     contents: [{ parts: [{ text: input }] }],
-    config: { 
+    config: {
       systemInstruction,
-      responseMimeType: "application/json"
-    }
+      responseMimeType: 'application/json',
+    },
   });
 
   return JSON.parse(response.text || '{}');
 };
 
-export const analyzeMemorySaturation = async (nodes: any[], currentVector: string) => {
-  const model = "gemini-3-flash-preview";
+export const analyzeMemorySaturation = async (nodes: unknown[], currentVector: string) => {
   const systemInstruction = `
     You are the "Socratic Brain." 
     Analyze the current MemoryNode saturation against the Owner's Directional Vector: ${currentVector}.
@@ -140,13 +163,13 @@ export const analyzeMemorySaturation = async (nodes: any[], currentVector: strin
     }
   `;
 
-  const response = await ai.models.generateContent({
-    model,
-    contents: [{ parts: [{ text: "Analyze memory saturation for drift." }] }],
-    config: { 
+  const response = await assertGeminiClient().models.generateContent({
+    model: GEMINI_MODEL,
+    contents: [{ parts: [{ text: 'Analyze memory saturation for drift.' }] }],
+    config: {
       systemInstruction,
-      responseMimeType: "application/json"
-    }
+      responseMimeType: 'application/json',
+    },
   });
 
   return JSON.parse(response.text || '{}');
