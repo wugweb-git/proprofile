@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Layers, User, Zap, Menu, X, Image } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { ThemeToggle } from './ThemeToggle';
 
 export const GlobalNav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,26 +11,30 @@ export const GlobalNav = () => {
   const location = useLocation();
 
   const routes = [
-    { path: '/', label: 'PUBLIC_PROXY', icon: <User size={18} />, color: 'bg-nothing-yellow' },
-    { path: '/owner', label: 'OWNER_HUD', icon: <Zap size={18} />, color: 'bg-black' },
-    { path: '/media', label: 'MEDIA_VAULT', icon: <Image size={18} />, color: 'bg-white text-black' },
-    { path: '/port', label: 'COMPLEXITY_PORT', icon: <Layers size={18} />, color: 'bg-white text-black' },
+    { path: '/', label: 'Public Proxy', icon: <User size={18} /> },
+    { path: '/owner', label: 'Owner Hub', icon: <Zap size={18} /> },
+    { path: '/media', label: 'Media Vault', icon: <Image size={18} /> },
+    { path: '/port', label: 'Complexity Port', icon: <Layers size={18} /> },
   ];
 
   return (
-    <nav className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100]" aria-label="Global Navigation">
-      <div className="relative">
+    <nav className="fixed bottom-[3vh] left-1/2 -translate-x-1/2 z-[100] w-[92vw] max-w-[28rem]" aria-label="Global navigation" role="navigation">
+      <div className="relative flex justify-center items-center gap-3">
+        <ThemeToggle />
+
         <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
           onClick={() => setIsOpen(!isOpen)}
           aria-expanded={isOpen}
           aria-controls="global-nav-menu"
           aria-haspopup="true"
-          aria-label="Toggle Global Navigation"
+          aria-label="Toggle global navigation"
           className={cn(
-            "w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:ring-nothing-yellow",
-            isOpen ? "bg-nothing-yellow text-black" : "bg-black/90 text-white backdrop-blur-xl border border-white/10"
+            'h-[7vh] w-[14vw] min-h-12 min-w-12 max-h-14 max-w-14 rounded-full flex items-center justify-center border transition-colors',
+            isOpen
+              ? 'text-black [background:var(--accent)] [border-color:var(--accent)]'
+              : 'text-primary surface-elevated border-primary'
           )}
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -41,46 +46,39 @@ export const GlobalNav = () => {
           <motion.div
             id="global-nav-menu"
             role="menu"
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            initial={{ opacity: 0, y: 20, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="absolute bottom-20 left-1/2 -translate-x-1/2 w-[320px] bg-black/90 backdrop-blur-2xl rounded-[2.5rem] p-4 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+            exit={{ opacity: 0, y: 20, scale: 0.96 }}
+            className="absolute bottom-[9vh] left-1/2 -translate-x-1/2 w-[92vw] max-w-[28rem] rounded-[1.5rem] p-[1.2rem] border border-primary surface-elevated"
           >
             <div className="space-y-2">
               {routes.map((route) => {
-                const isActive = location.pathname === route.path || (route.path !== '/' && location.pathname.startsWith(route.path));
+                const isActive =
+                  location.pathname === route.path ||
+                  (route.path !== '/' && location.pathname.startsWith(route.path));
+
                 return (
                   <button
                     key={route.path}
                     role="menuitem"
+                    aria-current={isActive ? 'page' : undefined}
                     onClick={() => {
                       navigate(route.path);
                       setIsOpen(false);
                     }}
                     className={cn(
-                      "w-full flex items-center gap-4 p-4 rounded-[1.5rem] transition-all group relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-nothing-yellow",
-                      isActive ? "bg-white/20 border border-white/30 shadow-[0_0_20px_rgba(255,255,255,0.1)]" : "hover:bg-white/5 border border-transparent"
+                      'w-full flex items-center gap-4 p-4 rounded-xl border transition-all text-left',
+                      isActive
+                        ? 'border-[var(--accent)] [background:var(--accent-muted)] text-primary'
+                        : 'border-transparent hover:[background:var(--state-hover)] text-secondary'
                     )}
                   >
-                    {isActive && (
-                      <motion.div 
-                        layoutId="nav-active"
-                        className="absolute left-0 top-0 bottom-0 w-1 bg-nothing-yellow"
-                      />
-                    )}
-                    <div className={cn("w-10 h-10 rounded-full flex items-center justify-center shrink-0", route.color)}>
+                    <div className={cn('w-10 h-10 rounded-full flex items-center justify-center border', isActive ? 'border-[var(--accent)] text-accent' : 'border-primary text-secondary')}>
                       {route.icon}
                     </div>
                     <div className="flex flex-col items-start">
-                      <span className={cn(
-                        "font-display font-bold text-xs tracking-widest uppercase",
-                        isActive ? "text-white" : "text-white/40 group-hover:text-white/60"
-                      )}>
-                        {route.label}
-                      </span>
-                      {isActive && (
-                        <span className="text-[8px] font-mono text-nothing-yellow uppercase mt-1">Active Environment</span>
-                      )}
+                      <span className="font-semibold text-sm tracking-wide">{route.label}</span>
+                      {isActive && <span className="nothing-dot-matrix text-accent">active</span>}
                     </div>
                   </button>
                 );
