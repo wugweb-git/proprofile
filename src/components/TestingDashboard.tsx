@@ -164,16 +164,19 @@ export const TestingDashboard = () => {
               <div className="pt-4 border-t border-white/5">
                 <DotMatrixText className="mb-2">SYSTEM_THEME</DotMatrixText>
                 <div className="flex gap-2">
-                  {['NOTHING_4.0', 'PRODUCT'].map(t => (
+                  {[
+                    { value: 'NOTHING_4.0', label: 'NOTHING' },
+                    { value: 'PRODUCT', label: 'APPLE' },
+                  ].map((themeOption) => (
                     <button
-                      key={t}
-                      onClick={() => setState(prev => ({ ...prev, systemTheme: t as any }))}
+                      key={themeOption.value}
+                      onClick={() => setState(prev => ({ ...prev, systemTheme: themeOption.value as any }))}
                       className={cn(
                         "flex-1 py-2 rounded-lg text-[8px] font-mono uppercase transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-nothing-yellow",
-                        state.systemTheme === t ? "bg-white text-black" : "bg-white/5 text-white/40 hover:text-white/70"
+                        state.systemTheme === themeOption.value ? "bg-white text-black" : "bg-white/5 text-white/40 hover:text-white/70"
                       )}
                     >
-                      {t}
+                      {themeOption.label}
                     </button>
                   ))}
                 </div>
